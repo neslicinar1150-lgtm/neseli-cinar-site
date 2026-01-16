@@ -114,21 +114,19 @@ window.onload = () => {
 
     alert("Merhaba Neşeli Çınar'ı seven arkadaşımız! Nasılsın?");
   </script>
+<script>
+document.getElementById("searchInput").addEventListener("keyup", function () {
+  let value = this.value.toLowerCase();
+  let elements = document.querySelectorAll("#searchArea *");
 
+  elements.forEach(el => {
+    if (el.children.length === 0) {
+      el.style.display = el.innerText.toLowerCase().includes(value)
+        ? ""
+        : "none";
+    }
+  });
+});
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
