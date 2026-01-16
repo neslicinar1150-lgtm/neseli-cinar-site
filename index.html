@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  title>
+
+<style>
+/* Buton */
+#topBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  background: #333;
+  color: #fff;
+  transition: opacity 0.3s;
+}
+</style>
   <link rel="stylesheet" href="style.css">
   <script>
 window.onload = () => {
@@ -70,7 +89,28 @@ window.onload = () => {
     <li>HTML Öğren</li>
     <li>Site Kısayolu</li>
   </ul>
+<button id="topBtn">↑</button>
+  
+<script>
+const btn = document.getElementById("topBtn");
 
+// Kaydırınca göster / gizle
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    btn.style.display = "block";
+  } else {
+    btn.style.display = "none";
+  }
+});
+
+// Tıklayınca yumuşak geçişle yukarı çık
+btn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+</script>
 </div>
   <script>
     const menu = document.getElementById("contextMenu");
@@ -133,6 +173,7 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
 </script>
 </body>
 </html>
+
 
 
 
