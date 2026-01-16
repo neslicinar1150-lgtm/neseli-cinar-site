@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Evde Limon Yetiştirme</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* PDF sayfası */
+.sayfa {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  background: url("resimler/arka1.jpg") no-repeat center;
+  background-size: cover;
+  page-break-after: always;
+}
+
+/* Ortadaki beyaz kutu */
+.bilgi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Başlık */
+.bilgi h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+/* Liste */
+.bilgi ol {
+  padding-left: 20px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* Logolar */
+.logo-sol {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 120px;
+}
+
+.logo-sag {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 120px;
+}
+</style>
+<style>
+.pdf-indir {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2e7d32;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 9999;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pdf-indir:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+}
+</style>
+</head>
+
+<body>
+<a href="Limonculuk.pdf" download class="pdf-indir">
+  📄 PDF İndir
+</a>
+<div class="sayfa">
+
+  <div class="bilgi">
+    <h2>Evde Limon Yetiştirmenin 6 Püf Noktası</h2>
+
+    <ol>
+      <li>
+        Limon saksısının yerini sabit tutmalısınız. Yer değişikliği,
+        bitkinin yaprak dökmesine ve gelişiminin yavaşlamasına neden olur.
+      </li>
+
+      <li>
+        Limon bitkisi toprağının tamamen kurumasını sevmez.
+        Toprak nemli kalmalı ancak kesinlikle su içinde bırakılmamalıdır.
+      </li>
+
+      <li>
+        Evde limon yetiştirirken iki ayrı saksı kullanmanız önerilir.
+        Böylece bitkinin kök gelişimi daha sağlıklı olur.
+      </li>
+
+      <li>
+        Sulama işleminden sonra saksı tabağında biriken suyu mutlaka dökün.
+        Tabakta kalan su kök çürümesine yol açabilir.
+      </li>
+
+      <li>
+        Limon bitkisi bol ışık sever. Günde en az 6 saat
+        güneş alan bir pencere önü tercih edilmelidir.
+      </li>
+
+      <li>
+        Bitkinin yaprakları düzenli olarak kontrol edilmeli,
+        sararan veya kuruyan yapraklar temizlenmelidir.
+      </li>
+    </ol>
+  </div>
+
+  <img src="resimler/logo.png" class="logo-sol">
+  <img src="resimler/logo.png" class="logo-sag">
+
+</div>
+
+</body>
+</html>
