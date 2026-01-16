@@ -47,28 +47,23 @@ window.onload = () => {
 <input type="text" id="searchInput" placeholder="Sayfada ara..."
        style="padding:10px; width:260px; font-size:16px;">
 <hr><br>
-  <img src="Resimler/Çınar ağacın logosu.png"
-       alt="Neşeli Çınar"
-       title="Neşeli Çınar"
-       width="700"
-       height="177">
-  <a href="Hafta Listesi.html">
-<img src="Resimler/Haftalık Bitki.heic"></>
-  </a>
-  <br><br><br><hr><br><br><br>
+<div id="searchArea">
 
-  <p>Seçenekler için sağ tıkla. Telefon için <a href="neslicinar1150-lgtm.github.io/mobil-cinar">buraya </a>tıkla.</p>
+  <img src="Resimler/Çınar ağacın logosu.png" ...>
 
-  <!-- SAĞ TIK MENÜSÜ -->
-  <div id="searchArea">
+  <p>Seçenekler için sağ tıkla. Telefon için
+    <a href="neslicinar1150-lgtm.github.io/mobil-cinar">buraya</a> tıkla.
+  </p>
+
   <ul id="contextMenu">
-    <li onclick="yenile()">🔄 Sayfayı Yeniden Başlat</li>
-    <li onclick="iletisim()">📞 İletişim Bilgileri</li>
-    <li onclick="geriBildirim()">💬 Geri Bildirim</li>
-    <li onclick="htmlOgren()">📘 HTML Öğren</li>
-    <li onclick="kisayol()">📥 Site Kısayolu</li>
+    <li>Sayfayı Yeniden Başlat</li>
+    <li>İletişim Bilgileri</li>
+    <li>Geri Bildirim</li>
+    <li>HTML Öğren</li>
+    <li>Site Kısayolu</li>
   </ul>
-  </div>
+
+</div>
   <script>
     const menu = document.getElementById("contextMenu");
 
@@ -130,3 +125,4 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
 </script>
 </body>
 </html>
+
