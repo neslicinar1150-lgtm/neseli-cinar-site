@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <style>
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #ffffff;
+    }
+
+    .navbar img {
+      height: 40px; /* navbar yüksekliğine göre ayarla */
+    }
+
+    .navbar .brand {
+      margin-left: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2f6b3f;
+    }
+  </style>
 <style>
 /* Buton */
 #topBtn {
@@ -61,6 +80,10 @@ window.onload = () => {
 </head>
 
 <body>
+  <nav class="navbar">
+    <img src="./Neşeli Çınar.png" alt="Neşeli Çınar Logo">
+    <span class="brand">Neşeli Çınar</span>
+  </nav>
 <input type="text" id="searchInput" placeholder="Sayfada ara..."
        style="padding:10px; width:260px; font-size:16px;">
 <hr><br>
@@ -191,6 +214,7 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
 </script>
 </body>
 </html>
+
 
 
 
