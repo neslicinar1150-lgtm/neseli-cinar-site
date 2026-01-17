@@ -75,7 +75,7 @@ dropArea.addEventListener("dragover", (e) => {
 // Alandan çıkınca
 dropArea.addEventListener("dragleave", () => {
     dropArea.classList.remove("active");
-    dropArea.innerText = "Dosyayı buraya sürükle";
+    dropArea.innerText = "İstek ve Şikayetlerinizi buraya sürükleyin veya buraya tıklayın.";
 });
 
 // Bırakınca
@@ -101,12 +101,12 @@ function kontrolVeYukle(file) {
     if (!allowedExtensions.includes(uzanti)) {
         dropArea.innerText = "❌ Geçersiz dosya türü";
         setTimeout(() => {
-            dropArea.innerText = "Dosyayı buraya sürükle";
+            dropArea.innerText = "İstek ve Şikayetlerinizi buraya sürükleyin veya buraya tıklayın.";
         }, 2000);
         return;
     }
 
-    dropArea.innerText = "Yükleniyor...";
+    dropArea.innerText = ".    .    .   . . . ..Yükleniyor. Lütfen bu pencereden çıkmayın.... . . .  .  .  .   .   .";
 
     let formData = new FormData();
     formData.append("file", file);
