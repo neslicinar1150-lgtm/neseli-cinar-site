@@ -23,11 +23,12 @@ body {
   background-color: #fff;
   display: flex;
   align-items: center;
+  gap: 20px;
   padding: 0 20px;
   z-index: 1000;
 }
 
-/* Yukarı çık butonu */
+/* Yukarı çık */
 #topBtn {
   position: fixed;
   bottom: 20px;
@@ -40,26 +41,6 @@ body {
   display: none;
   background: #333;
   color: #fff;
-}
-
-/* Sağ tık menüsü */
-#contextMenu {
-  position: absolute;
-  display: none;
-  background: white;
-  border: 1px solid #ccc;
-  list-style: none;
-  padding: 5px 0;
-  width: 220px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-#contextMenu li {
-  padding: 10px;
-  cursor: pointer;
-}
-#contextMenu li:hover {
-  background: #f0f0f0;
 }
 
 /* Sabit buton */
@@ -76,30 +57,18 @@ body {
   z-index: 9999;
 }
 
-/* ⌨️ Ekran Klavyesi */
+/* ⌨️ GELİŞMİŞ EKRAN KLAVYESİ */
 .keyboard {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #eee;
   padding: 10px;
+  border-radius: 12px;
   display: none;
   z-index: 9999;
-}
-
-.keyboard-header {
-  text-align: right;
-  margin-bottom: 5px;
-}
-
-.close-keyboard {
-  background: red;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
+  cursor: move;
 }
 
 .key-row {
@@ -122,9 +91,12 @@ body {
   background: #ccc;
 }
 
-.space {
-  width: 200px;
+.key.active {
+  background: #00ff00;
 }
+
+.space { width: 200px; }
+.wide { width: 90px; }
 </style>
 </head>
 
@@ -138,35 +110,46 @@ body {
 
 <!-- ⌨️ KLAVYE -->
 <div id="keyboard" class="keyboard">
-  <div class="keyboard-header">
-    <button class="close-keyboard" id="closeKeyboard">Kapat ❌</button>
+  <div class="key-row">
+    <button class="key wide" id="clearAll">AC</button>
+    <button class="key wide" id="closeKeyboard">❌</button>
   </div>
 
   <div class="key-row">
-    <button class="key">Q</button><button class="key">W</button>
-    <button class="key">E</button><button class="key">R</button>
-    <button class="key">T</button><button class="key">Y</button>
-    <button class="key">U</button><button class="key">I</button>
-    <button class="key">O</button><button class="key">P</button>
+    <button class="key num">1</button><button class="key num">2</button>
+    <button class="key num">3</button><button class="key num">4</button>
+    <button class="key num">5</button><button class="key num">6</button>
+    <button class="key num">7</button><button class="key num">8</button>
+    <button class="key num">9</button><button class="key num">0</button>
   </div>
 
   <div class="key-row">
-    <button class="key">A</button><button class="key">S</button>
-    <button class="key">D</button><button class="key">F</button>
-    <button class="key">G</button><button class="key">H</button>
-    <button class="key">J</button><button class="key">K</button>
-    <button class="key">L</button>
+    <button class="key letter">Q</button><button class="key letter">W</button>
+    <button class="key letter">E</button><button class="key letter">R</button>
+    <button class="key letter">T</button><button class="key letter">Y</button>
+    <button class="key letter">U</button><button class="key letter">I</button>
+    <button class="key letter">O</button><button class="key letter">P</button>
   </div>
 
   <div class="key-row">
-    <button class="key">Z</button><button class="key">X</button>
-    <button class="key">C</button><button class="key">V</button>
-    <button class="key">B</button><button class="key">N</button>
-    <button class="key">M</button>
-    <button class="key" id="backspace">⌫</button>
+    <button class="key letter">A</button><button class="key letter">S</button>
+    <button class="key letter">D</button><button class="key letter">F</button>
+    <button class="key letter">G</button><button class="key letter">H</button>
+    <button class="key letter">J</button><button class="key letter">K</button>
+    <button class="key letter">L</button>
   </div>
 
   <div class="key-row">
+    <button class="key wide" id="caps">↑↑</button>
+    <button class="key letter">Z</button><button class="key letter">X</button>
+    <button class="key letter">C</button><button class="key letter">V</button>
+    <button class="key letter">B</button><button class="key letter">N</button>
+    <button class="key letter">M</button>
+    <button class="key wide" id="backspace">⌫</button>
+  </div>
+
+  <div class="key-row">
+    <button class="key wide" id="shift">↑</button>
     <button class="key space">Boşluk</button>
   </div>
 </div>
@@ -179,14 +162,6 @@ body {
     <h3>Limonculuk.pdf</h3>
   </a>
 </div>
-
-<ul id="contextMenu">
-  <li>Sayfayı Yeniden Başlat</li>
-  <li>İletişim Bilgileri</li>
-  <li>Geri Bildirim</li>
-  <li>HTML Öğren</li>
-  <li>Site Kısayolu</li>
-</ul>
 
 <a href="sikayetveistek.html" class="sabit-buton">İstek ve Şikayetleriniz</a>
 <button id="topBtn">↑</button>
@@ -209,9 +184,12 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
   });
 });
 
-// ⌨️ Klavye JS
+// ⌨️ Klavye Mantığı
 const keyboard = document.getElementById("keyboard");
 const searchInput = document.getElementById("searchInput");
+
+let shift = false;
+let caps = false;
 
 searchInput.addEventListener("focus", () => {
   keyboard.style.display = "block";
@@ -221,18 +199,44 @@ document.getElementById("closeKeyboard").onclick = () => {
   keyboard.style.display = "none";
 };
 
-document.querySelectorAll(".key").forEach(key => {
+document.querySelectorAll(".letter, .num").forEach(key => {
   key.onclick = () => {
-    if (key.id === "backspace") {
-      searchInput.value = searchInput.value.slice(0, -1);
-    } else if (key.classList.contains("space")) {
-      searchInput.value += " ";
-    } else {
-      searchInput.value += key.innerText.toLowerCase();
+    let char = key.innerText;
+    if (key.classList.contains("letter")) {
+      char = (shift || caps) ? char : char.toLowerCase();
     }
+    searchInput.value += char;
     searchInput.dispatchEvent(new Event("keyup"));
+
+    if (shift) {
+      shift = false;
+      document.getElementById("shift").classList.remove("active");
+    }
   };
 });
+
+document.getElementById("shift").onclick = function () {
+  shift = !shift;
+  this.classList.toggle("active", shift);
+};
+
+document.getElementById("caps").onclick = function () {
+  caps = !caps;
+  this.classList.toggle("active", caps);
+};
+
+document.getElementById("backspace").onclick = () => {
+  searchInput.value = searchInput.value.slice(0, -1);
+};
+
+document.getElementById("clearAll").onclick = () => {
+  searchInput.value = "";
+  searchInput.dispatchEvent(new Event("keyup"));
+};
+
+document.querySelector(".space").onclick = () => {
+  searchInput.value += " ";
+};
 </script>
 
 </body>
