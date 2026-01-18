@@ -57,7 +57,7 @@ body {
   z-index: 9999;
 }
 
-/* ⌨️ GELİŞMİŞ EKRAN KLAVYESİ */
+/* ⌨️ GELİŞMİŞ TAŞINABİLİR KLAVYE */
 .keyboard {
   position: fixed;
   bottom: 20px;
@@ -68,7 +68,11 @@ body {
   border-radius: 12px;
   display: none;
   z-index: 9999;
-  cursor: move;
+  cursor: grab;
+}
+
+.keyboard.dragging {
+  cursor: grabbing;
 }
 
 .key-row {
@@ -85,10 +89,6 @@ body {
   border-radius: 6px;
   cursor: pointer;
   background: #fff;
-}
-
-.key:active {
-  background: #ccc;
 }
 
 .key.active {
@@ -184,7 +184,7 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
   });
 });
 
-// ⌨️ Klavye Mantığı
+// ⌨️ Klavye mantığı
 const keyboard = document.getElementById("keyboard");
 const searchInput = document.getElementById("searchInput");
 
@@ -237,6 +237,29 @@ document.getElementById("clearAll").onclick = () => {
 document.querySelector(".space").onclick = () => {
   searchInput.value += " ";
 };
+
+/* 🧲 TAŞINABİLİRLİK */
+let isDragging = false, offsetX = 0, offsetY = 0;
+
+keyboard.addEventListener("mousedown", e => {
+  isDragging = true;
+  keyboard.classList.add("dragging");
+  offsetX = e.clientX - keyboard.offsetLeft;
+  offsetY = e.clientY - keyboard.offsetTop;
+});
+
+document.addEventListener("mousemove", e => {
+  if (!isDragging) return;
+  keyboard.style.left = (e.clientX - offsetX) + "px";
+  keyboard.style.top  = (e.clientY - offsetY) + "px";
+  keyboard.style.bottom = "auto";
+  keyboard.style.transform = "none";
+});
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
+  keyboard.classList.remove("dragging");
+});
 </script>
 
 </body>
