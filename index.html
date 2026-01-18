@@ -57,7 +57,7 @@ body {
   z-index: 9999;
 }
 
-/* ⌨️ GELİŞMİŞ TAŞINABİLİR KLAVYE */
+/* Klavye */
 .keyboard {
   position: fixed;
   bottom: 20px;
@@ -104,11 +104,15 @@ body {
 
 <nav class="navbar">
   <img src="./Neşeli Çınar 2.jpg" alt="Neşeli Çınar" width="200">
+
   <input type="text" id="searchInput" placeholder="Sayfada ara..."
     style="padding:10px; width:260px; font-size:16px;">
+
+  <!-- ⭐ Klavye Aç Butonu -->
+  <button id="openKeyboardBtn" style="padding:10px; font-size:16px;">⌨️</button>
 </nav>
 
-<!-- ⌨️ KLAVYE -->
+<!-- Klavye -->
 <div id="keyboard" class="keyboard">
   <div class="key-row">
     <button class="key wide" id="clearAll">Aramayı Kapat</button>
@@ -184,20 +188,22 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
   });
 });
 
-// ⌨️ Klavye mantığı
+// Klavye
 const keyboard = document.getElementById("keyboard");
 const searchInput = document.getElementById("searchInput");
 
-let shift = false;
-let caps = false;
-
-searchInput.addEventListener("focus", () => {
+// ⭐ Yeni: Klavye açma butonu
+document.getElementById("openKeyboardBtn").onclick = () => {
   keyboard.style.display = "block";
-});
+  searchInput.focus();
+};
 
 document.getElementById("closeKeyboard").onclick = () => {
   keyboard.style.display = "none";
 };
+
+let shift = false;
+let caps = false;
 
 document.querySelectorAll(".letter, .num").forEach(key => {
   key.onclick = () => {
@@ -238,7 +244,7 @@ document.querySelector(".space").onclick = () => {
   searchInput.value += " ";
 };
 
-/* 🧲 TAŞINABİLİRLİK */
+// Taşınabilirlik
 let isDragging = false, offsetX = 0, offsetY = 0;
 
 keyboard.addEventListener("mousedown", e => {
@@ -264,4 +270,3 @@ document.addEventListener("mouseup", () => {
 
 </body>
 </html>
-
