@@ -7,8 +7,6 @@
 <link rel="icon" href="./1A32B532-738D-4DD5-BA6B-80801E146D9B.png">
 
 <style>
-
-/* 🎯 Neşeli Çınar Özel Fare İmleci */
 body, button, a, input {
   cursor: url("Resimler/Neşeli Çınar İmleç.png") 8 8, auto;
 }
@@ -19,7 +17,6 @@ body {
   padding-top: 60px;
 }
 
-/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
@@ -34,7 +31,6 @@ body {
   z-index: 1000;
 }
 
-/* Yukarı çık */
 #topBtn {
   position: fixed;
   bottom: 20px;
@@ -43,13 +39,11 @@ body {
   font-size: 16px;
   border: none;
   border-radius: 50%;
-  cursor: pointer;
   display: none;
   background: #333;
   color: #fff;
 }
 
-/* Sabit buton */
 .sabit-buton {
   position: fixed;
   bottom: 20px;
@@ -63,7 +57,7 @@ body {
   z-index: 9999;
 }
 
-/* Klavye */
+/* KLAVYE */
 .keyboard {
   position: fixed;
   bottom: 20px;
@@ -93,8 +87,8 @@ body {
   font-size: 16px;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
   background: #fff;
+  cursor: pointer;
 }
 
 .key.active {
@@ -103,7 +97,6 @@ body {
 
 .space { width: 200px; }
 .wide { width: 90px; }
-
 </style>
 </head>
 
@@ -111,14 +104,10 @@ body {
 
 <nav class="navbar">
   <img src="./Neşeli Çınar 2.jpg" alt="Neşeli Çınar" width="200">
-
-  <input type="text" id="searchInput" placeholder="Sayfada ara..."
-    style="padding:10px; width:260px; font-size:16px;">
-
+  <input type="text" id="searchInput" placeholder="Sayfada ara..." style="padding:10px; width:260px; font-size:16px;">
   <button id="openKeyboardBtn" style="padding:10px; font-size:16px;">⌨️</button>
 </nav>
 
-<!-- Klavye -->
 <div id="keyboard" class="keyboard">
 
   <div class="key-row">
@@ -126,7 +115,6 @@ body {
     <button class="key wide" id="closeKeyboard">Klavyeyi Gizle</button>
   </div>
 
-  <!-- 🔣 SEMBOLLER (EKLENDİ – SİLME YOK) -->
   <div id="symbols" style="display:none;">
     <div class="key-row">
       <button class="key sym">&</button>
@@ -148,9 +136,7 @@ body {
     </div>
   </div>
 
-  <!-- 🔤 HARFLER (AYNI + TÜRKÇE EK) -->
   <div id="letters">
-
     <div class="key-row">
       <button class="key num">1</button><button class="key num">2</button>
       <button class="key num">3</button><button class="key num">4</button>
@@ -194,7 +180,6 @@ body {
       <button class="key wide" id="showSymbols">?&</button>
       <button class="key space">Boşluk</button>
     </div>
-
   </div>
 </div>
 
@@ -258,19 +243,33 @@ document.querySelector(".space").onclick=()=>searchInput.value+=" ";
 showSymbols.onclick=()=>{symbols.style.display="block";letters.style.display="none";}
 abc.onclick=()=>{symbols.style.display="none";letters.style.display="block";}
 
-// Taşınabilirlik
-let drag=false, ox=0, oy=0;
+/* ✅ DÜZELTİLMİŞ SÜRÜKLEME */
+let drag=false, offsetX=0, offsetY=0;
+
 keyboard.addEventListener("mousedown",e=>{
-  drag=true;ox=e.clientX-keyboard.offsetLeft;oy=e.clientY-keyboard.offsetTop;
+  drag=true;
+  keyboard.classList.add("dragging");
+
+  const rect=keyboard.getBoundingClientRect();
+  offsetX=e.clientX-rect.left;
+  offsetY=e.clientY-rect.top;
+
+  keyboard.style.transform="none";
+  keyboard.style.left=rect.left+"px";
+  keyboard.style.top=rect.top+"px";
+  keyboard.style.bottom="auto";
 });
+
 document.addEventListener("mousemove",e=>{
   if(!drag)return;
-  keyboard.style.left=(e.clientX-ox)+"px";
-  keyboard.style.top=(e.clientY-oy)+"px";
-  keyboard.style.bottom="auto";
-  keyboard.style.transform="none";
+  keyboard.style.left=(e.clientX-offsetX)+"px";
+  keyboard.style.top=(e.clientY-offsetY)+"px";
 });
-document.addEventListener("mouseup",()=>drag=false);
+
+document.addEventListener("mouseup",()=>{
+  drag=false;
+  keyboard.classList.remove("dragging");
+});
 </script>
 
 </body>
