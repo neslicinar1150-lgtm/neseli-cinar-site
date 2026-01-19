@@ -7,6 +7,8 @@
 <link rel="icon" href="./1A32B532-738D-4DD5-BA6B-80801E146D9B.png">
 
 <style>
+
+/* 🎯 Neşeli Çınar Özel Fare İmleci */
 body, button, a, input {
   cursor: url("Resimler/Neşeli Çınar İmleç.png") 8 8, auto;
 }
@@ -17,13 +19,14 @@ body {
   padding-top: 60px;
 }
 
+/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 60px;
-  background: #fff;
+  background-color: #fff;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -31,29 +34,36 @@ body {
   z-index: 1000;
 }
 
+/* Yukarı çık */
 #topBtn {
   position: fixed;
   bottom: 20px;
   right: 20px;
   padding: 12px 16px;
-  border-radius: 50%;
+  font-size: 16px;
   border: none;
+  border-radius: 50%;
+  cursor: pointer;
   display: none;
   background: #333;
   color: #fff;
 }
 
+/* Sabit buton */
 .sabit-buton {
   position: fixed;
   bottom: 20px;
   left: 20px;
-  background: #00ff00;
+  background-color: #00FF00;
+  color: #000;
   padding: 12px 18px;
   border-radius: 10px;
-  font-weight: bold;
   text-decoration: none;
+  font-weight: bold;
+  z-index: 9999;
 }
 
+/* Klavye */
 .keyboard {
   position: fixed;
   bottom: 20px;
@@ -63,62 +73,84 @@ body {
   padding: 10px;
   border-radius: 12px;
   display: none;
-  cursor: grab;
   z-index: 9999;
+  cursor: grab;
 }
 
-.key-row { display: flex; justify-content: center; margin-bottom: 5px; }
+.keyboard.dragging {
+  cursor: grabbing;
+}
+
+.key-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
 
 .key {
   padding: 12px 16px;
   margin: 3px;
-  border-radius: 6px;
+  font-size: 16px;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   background: #fff;
 }
 
-.key.active { background: #00ff00; }
+.key.active {
+  background: #00ff00;
+}
+
 .space { width: 200px; }
 .wide { width: 90px; }
+
 </style>
 </head>
 
 <body>
 
 <nav class="navbar">
-  <img src="./Neşeli Çınar 2.jpg" width="200">
-  <input id="searchInput" placeholder="Sayfada ara..." style="padding:10px;width:260px;">
-  <button id="openKeyboardBtn">⌨️</button>
+  <img src="./Neşeli Çınar 2.jpg" alt="Neşeli Çınar" width="200">
+
+  <input type="text" id="searchInput" placeholder="Sayfada ara..."
+    style="padding:10px; width:260px; font-size:16px;">
+
+  <button id="openKeyboardBtn" style="padding:10px; font-size:16px;">⌨️</button>
 </nav>
 
-<!-- KLAVYE -->
+<!-- Klavye -->
 <div id="keyboard" class="keyboard">
 
   <div class="key-row">
     <button class="key wide" id="clearAll">Aramayı Kapat</button>
-    <button class="key wide" id="closeKeyboard">Gizle</button>
+    <button class="key wide" id="closeKeyboard">Klavyeyi Gizle</button>
   </div>
 
-  <!-- SEMBOLLER -->
+  <!-- 🔣 SEMBOLLER (EKLENDİ – SİLME YOK) -->
   <div id="symbols" style="display:none;">
     <div class="key-row">
-      <button class="key sym">&</button><button class="key sym">?</button>
-      <button class="key sym">!</button><button class="key sym">@</button>
-      <button class="key sym">#</button><button class="key sym">%</button>
-      <button class="key sym">(</button><button class="key sym">)</button>
+      <button class="key sym">&</button>
+      <button class="key sym">?</button>
+      <button class="key sym">!</button>
+      <button class="key sym">@</button>
+      <button class="key sym">#</button>
+      <button class="key sym">%</button>
+      <button class="key sym">(</button>
+      <button class="key sym">)</button>
     </div>
     <div class="key-row">
-      <button class="key sym">+</button><button class="key sym">-</button>
-      <button class="key sym">=</button><button class="key sym">.</button>
-      <button class="key sym">,</button><button class="key sym">:</button>
-      <button class="key sym">;</button>
+      <button class="key sym">+</button>
+      <button class="key sym">-</button>
+      <button class="key sym">=</button>
+      <button class="key sym">.</button>
+      <button class="key sym">,</button>
       <button class="key wide" id="abc">ABC</button>
     </div>
   </div>
 
-  <!-- HARFLER -->
+  <!-- 🔤 HARFLER (AYNI + TÜRKÇE EK) -->
   <div id="letters">
+
     <div class="key-row">
       <button class="key num">1</button><button class="key num">2</button>
       <button class="key num">3</button><button class="key num">4</button>
@@ -162,31 +194,62 @@ body {
       <button class="key wide" id="showSymbols">?&</button>
       <button class="key space">Boşluk</button>
     </div>
+
   </div>
 </div>
 
-<script>
-const keyboard = document.getElementById("keyboard");
-const searchInput = document.getElementById("searchInput");
-let shift=false, caps=false;
+<hr><br>
 
-openKeyboardBtn.onclick=()=>{keyboard.style.display="block";searchInput.focus();}
-closeKeyboard.onclick=()=>keyboard.style.display="none";
+<div id="searchArea">
+  <a href="./Limonculuk.html">
+    <img src="Resimler/Limon.png" width="300">
+    <h3>Limonculuk.pdf</h3>
+  </a>
+</div>
+
+<a href="sikayetveistek.html" class="sabit-buton">İstek ve Şikayetleriniz</a>
+<button id="topBtn">↑</button>
+
+<script>
+// Yukarı çık
+const btn = document.getElementById("topBtn");
+window.addEventListener("scroll", () => {
+  btn.style.display = window.scrollY > 300 ? "block" : "none";
+});
+btn.onclick = () => window.scrollTo({top:0,behavior:"smooth"});
+
+// Arama
+searchInput.addEventListener("keyup", function () {
+  let value = this.value.toLowerCase();
+  document.querySelectorAll("#searchArea *").forEach(el => {
+    if (el.children.length === 0) {
+      el.style.display = el.innerText.toLowerCase().includes(value) ? "" : "none";
+    }
+  });
+});
+
+// Klavye aç/kapat
+openKeyboardBtn.onclick = () => { keyboard.style.display="block"; searchInput.focus(); };
+closeKeyboard.onclick = () => keyboard.style.display="none";
+
+// Klavye mantığı
+let shift=false, caps=false;
 
 document.querySelectorAll(".letter,.num,.sym").forEach(k=>{
   k.onclick=()=>{
     let c=k.innerText;
     if(k.classList.contains("letter")) c=(shift||caps)?c:c.toLowerCase();
     searchInput.value+=c;
+    searchInput.dispatchEvent(new Event("keyup"));
     if(shift){shift=false;shiftBtn.classList.remove("active")}
   }
 });
 
-shiftBtn=shift;
-shift=document.getElementById("shift");
-shift.onclick=()=>shift.classList.toggle("active",shift=!shift);
-caps=document.getElementById("caps");
-caps.onclick=()=>caps.classList.toggle("active",caps=!caps);
+const shiftBtn=document.getElementById("shift");
+shiftBtn.onclick=()=>shiftBtn.classList.toggle("active",shift=!shift);
+
+const capsBtn=document.getElementById("caps");
+capsBtn.onclick=()=>capsBtn.classList.toggle("active",caps=!caps);
 
 backspace.onclick=()=>searchInput.value=searchInput.value.slice(0,-1);
 clearAll.onclick=()=>searchInput.value="";
@@ -194,6 +257,20 @@ document.querySelector(".space").onclick=()=>searchInput.value+=" ";
 
 showSymbols.onclick=()=>{symbols.style.display="block";letters.style.display="none";}
 abc.onclick=()=>{symbols.style.display="none";letters.style.display="block";}
+
+// Taşınabilirlik
+let drag=false, ox=0, oy=0;
+keyboard.addEventListener("mousedown",e=>{
+  drag=true;ox=e.clientX-keyboard.offsetLeft;oy=e.clientY-keyboard.offsetTop;
+});
+document.addEventListener("mousemove",e=>{
+  if(!drag)return;
+  keyboard.style.left=(e.clientX-ox)+"px";
+  keyboard.style.top=(e.clientY-oy)+"px";
+  keyboard.style.bottom="auto";
+  keyboard.style.transform="none";
+});
+document.addEventListener("mouseup",()=>drag=false);
 </script>
 
 </body>
