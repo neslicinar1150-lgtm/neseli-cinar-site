@@ -57,6 +57,22 @@ body {
   z-index: 9999;
 }
 
+/* INPUT İÇİ X */
+.search-wrapper {
+  position: relative;
+}
+
+#clearInput {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  display: none;
+  user-select: none;
+}
+
 /* KLAVYE */
 .keyboard {
   position: fixed;
@@ -98,11 +114,6 @@ body {
 
 .space { width: 200px; }
 .wide { width: 90px; }
-
-/* 🔹 Hepsini Temizle butonu başlangıçta gizli */
-#clearAll {
-  display: none;
-}
 </style>
 </head>
 
@@ -110,14 +121,21 @@ body {
 
 <nav class="navbar">
   <img src="./Neşeli Çınar 2.jpg" alt="Neşeli Çınar" width="200">
-  <input type="text" id="searchInput" placeholder="Sayfada ara..." style="padding:10px; width:260px; font-size:16px;">
+
+  <!-- 🔍 ARAMA + X -->
+  <div class="search-wrapper">
+    <input type="text" id="searchInput" placeholder="Sayfada ara..."
+      style="padding:10px 35px 10px 10px; width:260px; font-size:16px;">
+    <span id="clearInput">✖</span>
+  </div>
+
   <button id="openKeyboardBtn" style="padding:10px; font-size:16px;">⌨️</button>
 </nav>
 
 <div id="keyboard" class="keyboard">
 
   <div class="key-row">
-    <button class="key wide" id="clearAll">✖ Hepsini Temizle</button>
+    <button class="key wide" id="clearAll">Hepsini Temizle</button>
     <button class="key wide" id="closeKeyboard">Klavyeyi Gizle</button>
   </div>
 
@@ -209,10 +227,12 @@ window.addEventListener("scroll", () => {
 });
 btn.onclick = () => window.scrollTo({top:0,behavior:"smooth"});
 
-// 🔍 Arama + X butonu kontrolü
+// 🔍 Arama + input içi X
+const clearInput = document.getElementById("clearInput");
+
 searchInput.addEventListener("input", function () {
   let value = this.value.toLowerCase();
-  clearAll.style.display = value.length > 0 ? "inline-block" : "none";
+  clearInput.style.display = value ? "block" : "none";
 
   document.querySelectorAll("#searchArea *").forEach(el => {
     if (el.children.length === 0) {
@@ -220,6 +240,11 @@ searchInput.addEventListener("input", function () {
     }
   });
 });
+
+clearInput.onclick = () => {
+  searchInput.value = "";
+  searchInput.dispatchEvent(new Event("input"));
+};
 
 // Klavye aç/kapat
 openKeyboardBtn.onclick = () => { keyboard.style.display="block"; searchInput.focus(); };
@@ -258,8 +283,6 @@ document.querySelector(".space").onclick=()=>{
   searchInput.value+=" ";
   searchInput.dispatchEvent(new Event("input"));
 };
-
-// (Sürükleme kodların aynen duruyor – değişiklik yok)
 </script>
 
 </body>
