@@ -127,7 +127,7 @@ body {
 
 .burger-container {
   position: fixed;
-  bottom: 20px;
+  bottom: 90px;
   left: 20px;
   z-index: 10000;
 }
@@ -217,144 +217,6 @@ body {
 <a href="sikayetveistek.html" class="sabit-buton">İstek ve Şikayetleriniz</a>
 <button id="topBtn">↑</button>
 
-<script>
-// Yukarı çık
-const btn = document.getElementById("topBtn");
-window.addEventListener("scroll", () => {
-  btn.style.display = window.scrollY > 300 ? "block" : "none";
-});
-btn.onclick = () => window.scrollTo({top:0,behavior:"smooth"});
-
-// Arama + X
-const searchInput = document.getElementById("searchInput");
-const clearInput = document.getElementById("clearInput");
-
-searchInput.addEventListener("input", function () {
-  let value = this.value.toLowerCase();
-  clearInput.style.display = value ? "block" : "none";
-
-  document.querySelectorAll("#searchArea *").forEach(el => {
-    if (el.children.length === 0) {
-      el.style.display = el.innerText.toLowerCase().includes(value) ? "" : "none";
-    }
-  });
-});
-
-clearInput.onclick = () => {
-  searchInput.value = "";
-  searchInput.dispatchEvent(new Event("input"));
-};
-
-// Klavye aç/kapat
-const openKeyboardBtn = document.getElementById("openKeyboardBtn");
-const keyboard = document.getElementById("keyboard");
-const closeKeyboard = document.getElementById("closeKeyboard");
-
-openKeyboardBtn.onclick = () => { keyboard.style.display="block"; searchInput.focus(); };
-
-// Klavye mantığı
-let shift=false, caps=false;
-
-document.querySelectorAll(".letter,.num,.sym").forEach(k=>{
-  k.onclick=()=>{
-    let c=k.innerText;
-    if(k.classList.contains("letter")) c=(shift||caps)?c:c.toLowerCase();
-    searchInput.value+=c;
-    searchInput.dispatchEvent(new Event("input"));
-    if(shift){shift=false;shiftBtn.classList.remove("active")}
-  }
-});
-
-const shiftBtn=document.getElementById("shift");
-shiftBtn.onclick=()=>shiftBtn.classList.toggle("active",shift=!shift);
-
-const capsBtn=document.getElementById("caps");
-capsBtn.onclick=()=>capsBtn.classList.toggle("active",caps=!caps);
-
-const backspace = document.getElementById("backspace");
-backspace.onclick = () => {
-  searchInput.value = searchInput.value.slice(0, -1);
-  searchInput.dispatchEvent(new Event("input"));
-};
-
-const clearAll = document.getElementById("clearAll");
-clearAll.onclick = () => {
-  searchInput.value = "";
-  searchInput.dispatchEvent(new Event("input"));
-};
-
-document.querySelector(".space").onclick=()=>{
-  searchInput.value+=" ";
-  searchInput.dispatchEvent(new Event("input"));
-};
-
-// Klavye sürükleme (touch + mouse)
-let touchDrag=false, touchOffsetX=0, touchOffsetY=0;
-keyboard.addEventListener("touchstart", e=>{
-  touchDrag=true; keyboard.classList.add("dragging");
-  const touch = e.touches[0];
-  const rect = keyboard.getBoundingClientRect();
-  touchOffsetX = touch.clientX - rect.left;
-  touchOffsetY = touch.clientY - rect.top;
-  keyboard.style.transform="none";
-  keyboard.style.left = rect.left + "px";
-  keyboard.style.top = rect.top + "px";
-  keyboard.style.bottom="auto";
-},{passive:true});
-
-document.addEventListener("touchmove", e=>{
-  if(!touchDrag) return;
-  const touch = e.touches[0];
-  keyboard.style.left = (touch.clientX - touchOffsetX) + "px";
-  keyboard.style.top = (touch.clientY - touchOffsetY) + "px";
-},{passive:true});
-
-document.addEventListener("touchend", ()=>{
-  touchDrag=false; keyboard.classList.remove("dragging");
-});
-
-let mouseDrag=false, mouseOffsetX=0, mouseOffsetY=0;
-keyboard.addEventListener("mousedown", e=>{
-  mouseDrag=true; keyboard.classList.add("dragging");
-  const rect = keyboard.getBoundingClientRect();
-  mouseOffsetX = e.clientX - rect.left;
-  mouseOffsetY = e.clientY - rect.top;
-  keyboard.style.transform="none";
-  keyboard.style.left = rect.left + "px";
-  keyboard.style.top = rect.top + "px";
-  keyboard.style.bottom="auto";
-});
-
-document.addEventListener("mousemove", e=>{
-  if(!mouseDrag) return;
-  keyboard.style.left = (e.clientX - mouseOffsetX) + "px";
-  keyboard.style.top = (e.clientY - mouseOffsetY) + "px";
-});
-
-document.addEventListener("mouseup", ()=>{
-  mouseDrag=false; keyboard.classList.remove("dragging");
-});
-
-// BURGER MENÜ + OVERLAY
-const burgerBtn = document.getElementById("burgerBtn");
-const burgerMenu = document.getElementById("burgerMenu");
-const overlay = document.getElementById("overlay");
-const reloadPage = document.getElementById("reloadPage");
-
-burgerBtn.onclick = () => {
-  const open = burgerMenu.style.display === "flex";
-  burgerMenu.style.display = open ? "none" : "flex";
-  overlay.style.display = open ? "none" : "block";
-};
-
-overlay.onclick = () => {
-  burgerMenu.style.display = "none";
-  overlay.style.display = "none";
-};
-
-reloadPage.onclick = () => location.reload();
-</script>
-
 <!-- KLAVYE HTML -->
 <div id="keyboard" class="keyboard">
 
@@ -430,6 +292,144 @@ reloadPage.onclick = () => location.reload();
     </div>
   </div>
 </div>
+
+<script>
+// YUKARI ÇIK
+const btn = document.getElementById("topBtn");
+window.addEventListener("scroll", () => {
+  btn.style.display = window.scrollY > 300 ? "block" : "none";
+});
+btn.onclick = () => window.scrollTo({top:0,behavior:"smooth"});
+
+// ARAMA + X
+const searchInput = document.getElementById("searchInput");
+const clearInput = document.getElementById("clearInput");
+
+searchInput.addEventListener("input", function () {
+  let value = this.value.toLowerCase();
+  clearInput.style.display = value ? "block" : "none";
+
+  document.querySelectorAll("#searchArea *").forEach(el => {
+    if (el.children.length === 0) {
+      el.style.display = el.innerText.toLowerCase().includes(value) ? "" : "none";
+    }
+  });
+});
+
+clearInput.onclick = () => {
+  searchInput.value = "";
+  searchInput.dispatchEvent(new Event("input"));
+};
+
+// KLAVYE
+const openKeyboardBtn = document.getElementById("openKeyboardBtn");
+const keyboard = document.getElementById("keyboard");
+const closeKeyboard = document.getElementById("closeKeyboard");
+
+openKeyboardBtn.onclick = () => { keyboard.style.display="block"; searchInput.focus(); };
+closeKeyboard.onclick = () => keyboard.style.display="none";
+
+let shift=false, caps=false;
+
+document.querySelectorAll(".letter,.num,.sym").forEach(k=>{
+  k.onclick=()=>{
+    let c=k.innerText;
+    if(k.classList.contains("letter")) c=(shift||caps)?c:c.toLowerCase();
+    searchInput.value+=c;
+    searchInput.dispatchEvent(new Event("input"));
+    if(shift){shift=false;shiftBtn.classList.remove("active")}
+  }
+});
+
+const shiftBtn=document.getElementById("shift");
+shiftBtn.onclick=()=>shiftBtn.classList.toggle("active",shift=!shift);
+
+const capsBtn=document.getElementById("caps");
+capsBtn.onclick=()=>capsBtn.classList.toggle("active",caps=!caps);
+
+const backspace = document.getElementById("backspace");
+backspace.onclick = () => {
+  searchInput.value = searchInput.value.slice(0, -1);
+  searchInput.dispatchEvent(new Event("input"));
+};
+
+const clearAll = document.getElementById("clearAll");
+clearAll.onclick = () => {
+  searchInput.value = "";
+  searchInput.dispatchEvent(new Event("input"));
+};
+
+document.querySelector(".space").onclick=()=>{
+  searchInput.value+=" ";
+  searchInput.dispatchEvent(new Event("input"));
+};
+
+// KLAVYE SÜRÜKLEME
+let touchDrag=false, touchOffsetX=0, touchOffsetY=0;
+keyboard.addEventListener("touchstart", e=>{
+  touchDrag=true; keyboard.classList.add("dragging");
+  const touch = e.touches[0];
+  const rect = keyboard.getBoundingClientRect();
+  touchOffsetX = touch.clientX - rect.left;
+  touchOffsetY = touch.clientY - rect.top;
+  keyboard.style.transform="none";
+  keyboard.style.left = rect.left + "px";
+  keyboard.style.top = rect.top + "px";
+  keyboard.style.bottom="auto";
+},{passive:true});
+
+document.addEventListener("touchmove", e=>{
+  if(!touchDrag) return;
+  const touch = e.touches[0];
+  keyboard.style.left = (touch.clientX - touchOffsetX) + "px";
+  keyboard.style.top = (touch.clientY - touchOffsetY) + "px";
+},{passive:true});
+
+document.addEventListener("touchend", ()=>{
+  touchDrag=false; keyboard.classList.remove("dragging");
+});
+
+let mouseDrag=false, mouseOffsetX=0, mouseOffsetY=0;
+keyboard.addEventListener("mousedown", e=>{
+  mouseDrag=true; keyboard.classList.add("dragging");
+  const rect = keyboard.getBoundingClientRect();
+  mouseOffsetX = e.clientX - rect.left;
+  mouseOffsetY = e.clientY - rect.top;
+  keyboard.style.transform="none";
+  keyboard.style.left = rect.left + "px";
+  keyboard.style.top = rect.top + "px";
+  keyboard.style.bottom="auto";
+});
+
+document.addEventListener("mousemove", e=>{
+  if(!mouseDrag) return;
+  keyboard.style.left = (e.clientX - mouseOffsetX) + "px";
+  keyboard.style.top = (e.clientY - mouseOffsetY) + "px";
+});
+
+document.addEventListener("mouseup", ()=>{
+  mouseDrag=false; keyboard.classList.remove("dragging");
+});
+
+// BURGER MENÜ
+const burgerBtn = document.getElementById("burgerBtn");
+const burgerMenu = document.getElementById("burgerMenu");
+const overlay = document.getElementById("overlay");
+const reloadPage = document.getElementById("reloadPage");
+
+burgerBtn.onclick = () => {
+  const open = burgerMenu.style.display === "flex";
+  burgerMenu.style.display = open ? "none" : "flex";
+  overlay.style.display = open ? "none" : "block";
+};
+
+overlay.onclick = () => {
+  burgerMenu.style.display = "none";
+  overlay.style.display = "none";
+};
+
+reloadPage.onclick = () => location.reload();
+</script>
 
 </body>
 </html>
