@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Arama Sonuçları</title>
+</head>
+<body>
+
+<h1>Arama Sonuçları</h1>
+<p id="bilgi"></p>
+<ul id="sonuclar"></ul>
+
+<script>
+// URL'den arama kelimesi
+const params = new URLSearchParams(window.location.search);
+const query = params.get("q") || "";
+
+// Bilgi yazısı
+document.getElementById("bilgi").textContent =
+  `"${query}" için sonuçlar:`;
+
+// JSON'u aynı klasörden al
+fetch("arama.json")
+  .then(res => res.json())
+  .then(data => {
+    const liste = document.getElementById("sonuclar");
+
+    const sonuc = data.filter(item =>
+      item.baslik.toLowerCase().includes(query.toLowerCase()) ||
+      item.icerik.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (sonuc.length === 0) {
+      liste.innerHTML = "<li>Sonuç bulunamadı.</li>";
+      return;
+    }
+
+    sonuc.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${item.url}">${item.baslik}</a>`;
+      liste.appendChild(li);
+    });
+  });
+</script>
+
+</body>
+</html>
