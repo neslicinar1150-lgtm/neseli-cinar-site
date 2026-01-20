@@ -7,6 +7,7 @@
 <link rel="icon" href="./1A32B532-738D-4DD5-BA6B-80801E146D9B.png">
 
 <style>
+
 body, button, a, input {
   cursor: url("Resimler/Neşeli Çınar İmleç.png") 8 8, auto;
 }
@@ -114,6 +115,61 @@ body {
 
 .space { width: 200px; }
 .wide { width: 90px; }
+
+
+  /* 🍔 BURGER MENÜ */
+.burger-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10000;
+}
+
+#burgerBtn {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.burger-menu {
+  position: absolute;
+  bottom: 65px;
+  left: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  min-width: 220px;
+  overflow: hidden;
+}
+
+.burger-menu a,
+.burger-menu button {
+  padding: 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.burger-menu a {
+  text-decoration: none;
+  color: #000;
+}
+
+.burger-menu a:hover,
+.burger-menu button:hover {
+  background: #f0f0f0;
+}
+
 </style>
 </head>
 
@@ -349,6 +405,37 @@ document.addEventListener("mouseup", () => {
   mouseDrag = false;
   keyboard.classList.remove("dragging");
 });
+  
+/* 🍔 BURGER MENÜ JS */
+const burgerBtn = document.getElementById("burgerBtn");
+const burgerMenu = document.getElementById("burgerMenu");
+const reloadPage = document.getElementById("reloadPage");
+
+burgerBtn.onclick = () => {
+  burgerMenu.style.display =
+    burgerMenu.style.display === "flex" ? "none" : "flex";
+};
+
+reloadPage.onclick = () => {
+  location.reload();
+};
+
+// Menü dışına tıklanınca kapansın
+document.addEventListener("click", e => {
+  if (!burgerBtn.contains(e.target) && !burgerMenu.contains(e.target)) {
+    burgerMenu.style.display = "none";
+  }
+});
 </script>
+  <!-- 🍔 SOL ALT BURGER MENÜ -->
+<div class="burger-container">
+  <button id="burgerBtn">☰</button>
+
+  <div id="burgerMenu" class="burger-menu">
+    <a href="Dikkat.html">📥 Sitemizin kısayolunu indir</a>
+    <button id="reloadPage">🔄 Sayfayı yeniden başlat</button>
+  </div>
+</div>
+
 </body>
 </html>
