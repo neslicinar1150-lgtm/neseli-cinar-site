@@ -318,6 +318,37 @@ document.addEventListener("touchend", () => {
   touchDrag = false;
   keyboard.classList.remove("dragging");
 });
+
+  
+/* 🖥️ MASAÜSTÜ SÜRÜKLEME – EKLENDİ */
+let mouseDrag = false;
+let mouseOffsetX = 0;
+let mouseOffsetY = 0;
+
+keyboard.addEventListener("mousedown", e => {
+  mouseDrag = true;
+  keyboard.classList.add("dragging");
+
+  const rect = keyboard.getBoundingClientRect();
+  mouseOffsetX = e.clientX - rect.left;
+  mouseOffsetY = e.clientY - rect.top;
+
+  keyboard.style.transform = "none";
+  keyboard.style.left = rect.left + "px";
+  keyboard.style.top = rect.top + "px";
+  keyboard.style.bottom = "auto";
+});
+
+document.addEventListener("mousemove", e => {
+  if (!mouseDrag) return;
+  keyboard.style.left = (e.clientX - mouseOffsetX) + "px";
+  keyboard.style.top = (e.clientY - mouseOffsetY) + "px";
+});
+
+document.addEventListener("mouseup", () => {
+  mouseDrag = false;
+  keyboard.classList.remove("dragging");
+});
 </script>
 </body>
 </html>
