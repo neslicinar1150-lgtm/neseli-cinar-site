@@ -236,8 +236,16 @@ shiftBtn.onclick=()=>shiftBtn.classList.toggle("active",shift=!shift);
 const capsBtn=document.getElementById("caps");
 capsBtn.onclick=()=>capsBtn.classList.toggle("active",caps=!caps);
 
-backspace.onclick=()=>searchInput.value=searchInput.value.slice(0,-1);
-clearAll.onclick=()=>searchInput.value="";
+backspace.onclick = () => {
+  searchInput.value = searchInput.value.slice(0, -1);
+  searchInput.dispatchEvent(new Event("keyup"));
+};
+
+clearAll.onclick = () => {
+  searchInput.value = "";
+  searchInput.dispatchEvent(new Event("keyup"));
+};
+
 document.querySelector(".space").onclick=()=>searchInput.value+=" ";
 
 showSymbols.onclick=()=>{symbols.style.display="block";letters.style.display="none";}
