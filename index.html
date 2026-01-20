@@ -69,6 +69,7 @@ body {
   display: none;
   z-index: 9999;
   cursor: grab;
+  touch-action: none;
 }
 
 .keyboard.dragging {
@@ -251,7 +252,7 @@ document.querySelector(".space").onclick=()=>searchInput.value+=" ";
 showSymbols.onclick=()=>{symbols.style.display="block";letters.style.display="none";}
 abc.onclick=()=>{symbols.style.display="none";letters.style.display="block";}
 
-/* ✅ DÜZELTİLMİŞ SÜRÜKLEME */
+/* MASAÜSTÜ SÜRÜKLEME */
 let drag=false, offsetX=0, offsetY=0;
 
 keyboard.addEventListener("mousedown",e=>{
@@ -275,6 +276,35 @@ document.addEventListener("mousemove",e=>{
 });
 
 document.addEventListener("mouseup",()=>{
+  drag=false;
+  keyboard.classList.remove("dragging");
+});
+
+/* 📱 MOBİL SÜRÜKLEME */
+keyboard.addEventListener("touchstart",e=>{
+  drag=true;
+  keyboard.classList.add("dragging");
+
+  const touch=e.touches[0];
+  const rect=keyboard.getBoundingClientRect();
+
+  offsetX=touch.clientX-rect.left;
+  offsetY=touch.clientY-rect.top;
+
+  keyboard.style.transform="none";
+  keyboard.style.left=rect.left+"px";
+  keyboard.style.top=rect.top+"px";
+  keyboard.style.bottom="auto";
+});
+
+document.addEventListener("touchmove",e=>{
+  if(!drag)return;
+  const touch=e.touches[0];
+  keyboard.style.left=(touch.clientX-offsetX)+"px";
+  keyboard.style.top=(touch.clientY-offsetY)+"px";
+});
+
+document.addEventListener("touchend",()=>{
   drag=false;
   keyboard.classList.remove("dragging");
 });
