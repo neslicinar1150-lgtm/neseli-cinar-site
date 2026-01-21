@@ -47,7 +47,8 @@
 }
 </style>
   <meta charset="UTF-8">
-  <title> <p id="sonuclar"></p> için Arama Sonuçları</title>
+  <title>Arama Sonuçları - ÇınArama</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0>
 </head>
 <body>
 <button class="ana-sayfa-buton" style="
@@ -99,6 +100,18 @@ fetch("arama.json")
       liste.appendChild(li);
     });
   });
+  
+  // URL'den arama kelimesi
+const params = new URLSearchParams(window.location.search);
+const query = params.get("q") || "";
+
+// Title'ı değiştir
+document.title = `"${query}" için arama sonuçları - ÇınArama`;
+
+// Bilgi yazısı
+document.getElementById("bilgi").textContent =
+  `"${query}" için sonuçlar:`;
+  
 </script>
 
 </body>
