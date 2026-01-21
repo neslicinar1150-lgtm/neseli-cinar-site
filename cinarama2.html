@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <style>
+.ana-sayfa-buton {
+  position: fixed;
+  left: 15px;
+  bottom: 15px;
+  background-color: #ffcc00;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 9999;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.ana-sayfa-buton:hover {
+  background-color: #ffb300;
+  transform: scale(1.05);
+}
+</style>
   <meta charset="UTF-8">
   <title>Arama Sonuçları</title>
 </head>
 <body>
-
+<button class="ana-sayfa-buton" style="
+  border-radius: 100px; 
+  background-color: aliceblue;">🏠 Ana Sayfa</button>
 <h1>Arama Sonuçları</h1>
 <p id="bilgi"></p>
 <ul id="sonuclar"></ul>
