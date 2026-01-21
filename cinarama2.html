@@ -2,6 +2,29 @@
 <html lang="tr">
 <head>
   <style>
+  
+  /* Sağ alt köşe arama formu */
+.sag-alt-arama {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  z-index: 9999;
+}
+
+.sag-alt-arama input[type="search"] {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 2px solid #ffcc00;
+  outline: none;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.sag-alt-arama input[type="search"]:focus {
+  border-color: #ff9900;
+}
+
+  
 .ana-sayfa-buton {
   position: fixed;
   left: 15px;
@@ -24,7 +47,7 @@
 }
 </style>
   <meta charset="UTF-8">
-  <title>Arama Sonuçları</title>
+  <title> <p id="sonuclar"></p> için Arama Sonuçları</title>
 </head>
 <body>
 <button class="ana-sayfa-buton" style="
@@ -33,7 +56,18 @@
 <h1>Arama Sonuçları</h1>
 <p id="bilgi"></p>
 <ul id="sonuclar"></ul>
-
+<form 
+  action="https://neslicinar1150-lgtm.github.io/neseli-cinar-site/cinarama2.html" 
+  method="GET"
+  class="sag-alt-arama"
+>
+  <input 
+    type="search" 
+    name="q" 
+    placeholder="Ara..."
+    required
+  >
+</form>
 <script>
 // URL'den arama kelimesi
 const params = new URLSearchParams(window.location.search);
