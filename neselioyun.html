@@ -148,6 +148,25 @@ if(window.innerWidth>768){
 
 function yenidenBasla(){oyunuBaslat()}
 function skoruPaylas(){alert("Paylaşım hazır")}
+
+  function tamEkran(){
+  document.getElementById("oyunAlani").requestFullscreen();
+}
+
+function tamEkranCik(){
+  document.exitFullscreen();
+}
+
+/* 🔥 TAM EKRANI DİNLE */
+document.addEventListener("fullscreenchange", function () {
+  const cikisBtn = document.getElementById("cikisBtn");
+
+  if (document.fullscreenElement) {
+    cikisBtn.style.display = "block";   // SADECE tam ekranda
+  } else {
+    cikisBtn.style.display = "none";    // normal ekranda ASLA görünmez
+  }
+});
 </script>
 
 </body>
