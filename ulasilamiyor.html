@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gün 27 Proje - Sayı Tahmin Oyunu</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+
+      background-image: url("Resimler/Çınar ağacın logosu.png");
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: 300px;
+      background-color: #c8f0c8;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .oyun {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      width: 330px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .fullscreen {
+      background: #222;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .reset {
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .paylas {
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="oyun" id="oyunAlani">
+    <h2>🎯 Sayı Tahmin Oyunu</h2>
+    <p>1–10 arasında bir sayı tuttum</p>
+    <p>❤️ Hak: <span id="hak">3</span> | 🔁 Tur: <span id="tur">1</span></p>
+
+    <input type="number" id="tahmin" placeholder="Tahminin">
+    <button onclick="tahminEt()">Tahmin Et</button>
+    <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
+    <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
+    <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
+
+    <h3 id="sonuc"></h3>
+  </div>
+
+  <script>
+    let tutulanSayi;
+    let hak;
+    let tur;
+
+    oyunuBaslat();
+
+    function oyunuBaslat() {
+      tutulanSayi = Math.floor(Math.random() * 10) + 1;
+      hak = 3;
+      tur = 1;
+      document.getElementById("hak").innerText = hak;
+      document.getElementById("tur").innerText = tur;
+      document.getElementById("sonuc").innerText = "";
+      document.getElementById("tahmin").value = "";
+    }
+
+    function tahminEt() {
+      let girilen = Number(document.getElementById("tahmin").value);
+      let sonuc = document.getElementById("sonuc");
+
+      if (!girilen) {
+        alert("Bir sayı gir!");
+        return;
+      }
+
+      if (girilen === tutulanSayi) {
+        sonuc.innerText = "🎉 Tebrikler! " + tur + ". turda kazandın!";
+        return;
+      }
+
+      hak--;
+      document.getElementById("hak").innerText = hak;
+
+      if (hak === 0) {
+        sonuc.innerText = "😢 Hakkın bitti! Sayı: " + tutulanSayi;
+        return;
+      }
+
+      tur++;
+      document.getElementById("tur").innerText = tur;
+
+      if (girilen < tutulanSayi) {
+        sonuc.innerText = "📈 Daha BÜYÜK bir sayı dene";
+      } else {
+        sonuc.innerText = "📉 Daha KÜÇÜK bir sayı dene";
+      }
+    }
+
+    function skoruPaylas() {
+      let tarih = new Date().toLocaleDateString("tr-TR");
+      let mesaj =
+        "Ben " + tarih + " tarihinde " +
+        tur + ". turu geçtim 🎉";
+
+      if (navigator.share) {
+        navigator.share({
+          title: "Sayı Tahmin Oyunu",
+          text: mesaj
+        });
+      } else {
+        navigator.clipboard.writeText(mesaj);
+        alert("Paylaşım metni kopyalandı:\n\n" + mesaj);
+      }
+    }
+
+    function yenidenBasla() {
+      oyunuBaslat();
+    }
+
+    function tamEkran() {
+      let alan = document.getElementById("oyunAlani");
+
+      if (!document.fullscreenElement) {
+        alan.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  </script>
+
+</body>
+</html>
