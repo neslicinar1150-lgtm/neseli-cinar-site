@@ -5,6 +5,16 @@
 <title>Sayı Tahmin Oyunu</title>
 
 <style>
+
+.cikis{
+  background:#e53935;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:10px;
+  cursor:pointer;
+}
+  
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -79,6 +89,9 @@ input,button{
 
 <div class="oyun" id="oyunAlani">
   <h2>🎯 Sayı Tahmin Oyunu</h2>
+  <button id="cikisBtn" class="cikis" onclick="tamEkranCik()" style="display:none">
+  ❌ Tam Ekrandan Çık
+</button>
   <p>❤️ Hak: <span id="hak">3</span> | 🔁 Tur: <span id="tur">1</span></p>
   <input type="number" id="tahmin" placeholder="Tahminin">
   <button onclick="tahminEt()">Tahmin Et</button>
@@ -89,9 +102,6 @@ input,button{
 <div class="sabit-menu">
   <div class="menu-icerik" id="menu">
     <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
-    <button class="cikis" id="cikisBtn" onclick="tamEkranCik()" style="display:none">
-      ❌ Tam Ekrandan Çık
-    </button>
     <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
     <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
   </div>
