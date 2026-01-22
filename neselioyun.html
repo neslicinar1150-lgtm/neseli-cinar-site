@@ -30,58 +30,65 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
-    input, .oyun button {
+    input, button {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
       font-size: 16px;
     }
 
-    /* 🔘 Toggle Menü */
-    .toggle-menu {
+    /* 🔽 SAĞ ALT SABİT MENÜ */
+    .sabit-menu {
       position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 9999;
+      right: 15px;
+      bottom: 15px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 10px;
+      gap: 8px;
+      z-index: 9999;
     }
 
-    .toggle-menu button {
-      width: 52px;
-      height: 52px;
+    .menu-buton {
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
       border: none;
+      font-size: 22px;
       cursor: pointer;
-      font-size: 20px;
-      color: white;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
 
-    .menu-btn {
+    .menu-ac {
       background: #333;
+      color: white;
     }
 
-    .fullscreen {
-      background: #222;
-    }
-
-    .reset {
-      background: #4caf50;
-    }
-
-    .paylas {
-      background: #2196f3;
-    }
-
-    .menu-item {
+    .menu-icerik {
       display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 5px;
     }
 
-    .menu-acik .menu-item {
-      display: block;
+    .menu-icerik button {
+      width: 180px;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .fullscreen { background: #222; }
+    .reset { background: #4caf50; }
+    .paylas { background: #2196f3; }
+
+    /* 📱 Küçük ekran uyumu */
+    @media (max-width: 480px) {
+      .menu-icerik button {
+        width: 150px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -98,12 +105,15 @@
     <h3 id="sonuc"></h3>
   </div>
 
-  <!-- 🔘 Sağ Alt Toggle Menü -->
-  <div class="toggle-menu" id="toggleMenu">
-    <button class="menu-item fullscreen" onclick="tamEkran()">🖥️</button>
-    <button class="menu-item reset" onclick="yenidenBasla()">🔁</button>
-    <button class="menu-item paylas" onclick="skoruPaylas()">📤</button>
-    <button class="menu-btn" onclick="menuToggle()">⚙️</button>
+  <!-- 🔽 SAĞ ALT MENÜ -->
+  <div class="sabit-menu">
+    <div class="menu-icerik" id="menuIcerik">
+      <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
+      <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
+      <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
+    </div>
+
+    <button class="menu-buton menu-ac" onclick="menuAcKapat()">☰</button>
   </div>
 
   <script>
@@ -148,22 +158,18 @@
       tur++;
       document.getElementById("tur").innerText = tur;
 
-      if (girilen < tutulanSayi) {
-        sonuc.innerText = "📈 Daha BÜYÜK bir sayı dene";
-      } else {
-        sonuc.innerText = "📉 Daha KÜÇÜK bir sayı dene";
-      }
+      sonuc.innerText =
+        girilen < tutulanSayi
+        ? "📈 Daha BÜYÜK bir sayı dene"
+        : "📉 Daha KÜÇÜK bir sayı dene";
     }
 
     function skoruPaylas() {
       let tarih = new Date().toLocaleDateString("tr-TR");
-      let mesaj = "Ben " + tarih + " tarihinde " + tur + " tur oynadım.";
+      let mesaj = "Ben " + tarih + " tarihinde " + tur + " hakkımı denedim.";
 
       if (navigator.share) {
-        navigator.share({
-          title: "Sayı Tahmin Oyunu",
-          text: mesaj
-        });
+        navigator.share({ title: "Sayı Tahmin Oyunu", text: mesaj });
       } else {
         navigator.clipboard.writeText(mesaj);
         alert("Paylaşım metni kopyalandı:\n\n" + mesaj);
@@ -183,8 +189,9 @@
       }
     }
 
-    function menuToggle() {
-      document.getElementById("toggleMenu").classList.toggle("menu-acik");
+    function menuAcKapat() {
+      let menu = document.getElementById("menuIcerik");
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
     }
   </script>
 
