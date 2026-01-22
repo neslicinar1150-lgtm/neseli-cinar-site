@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neşeli Çınar</title>
 <link rel="icon" href="./1A32B532-738D-4DD5-BA6B-80801E146D9B.png">
 
 <style>
-  
 .logo-text{
-    font-family: "Fredoka", sans-serif;
-    font-size: 60px;
-    font-weight: 600;
-    color: #ffffff;
+  font-family: "Fredoka", sans-serif;
+  font-size: 60px;
+  font-weight: 600;
+  color: #000;
 }
-  
+
 body, button, a, input {
   cursor: url("Resimler/Neşeli Çınar İmleç.png") 8 8, auto;
 }
@@ -26,61 +25,63 @@ body {
   padding-top: 60px;
 }
 
+/* NAVBAR */
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   height: 60px;
-  background-color: #fff;
+  background: #fff;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   padding: 0 20px;
   z-index: 1000;
 }
 
-#topBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 12px 16px;
-  font-size: 16px;
-  border: none;
-  border-radius: 50%;
-  display: none;
-  background: #333;
-  color: #fff;
-  z-index: 900;
-}
-
-.sabit-buton {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background-color: #00FF00;
-  color: #000;
-  padding: 12px 18px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  z-index: 999;
-}
-
-/* INPUT İÇİ X */
+/* SEARCH */
 .search-wrapper {
   position: relative;
 }
 
+.search-wrapper input {
+  padding: 6px 30px 6px 10px;
+}
+
 #clearInput {
   position: absolute;
-  right: 10px;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 18px;
   display: none;
-  user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* TOP BUTTON */
+#topBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+  border-radius: 50%;
+  padding: 12px 16px;
+  display: none;
+  background: #333;
+  color: #fff;
+}
+
+/* SABİT BUTON */
+.sabit-buton {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #00FF00;
+  padding: 12px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #000;
 }
 
 /* KLAVYE */
@@ -95,12 +96,9 @@ body {
   display: none;
   z-index: 9999;
   cursor: grab;
-  touch-action: none;
 }
 
-.keyboard.dragging {
-  cursor: grabbing;
-}
+.keyboard.dragging { cursor: grabbing; }
 
 .key-row {
   display: flex;
@@ -109,27 +107,23 @@ body {
 }
 
 .key {
-  padding: 12px 16px;
+  padding: 10px 14px;
   margin: 3px;
-  font-size: 16px;
   border: none;
   border-radius: 6px;
   background: #fff;
   cursor: pointer;
 }
 
-.key.active {
-  background: #00ff00;
-}
-
+.key.active { background: #00ff00; }
 .space { width: 200px; }
 .wide { width: 90px; }
 
-/* BURGER + OVERLAY */
+/* BURGER */
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,.55);
   display: none;
   z-index: 8000;
 }
@@ -149,20 +143,16 @@ body {
   background: #000;
   color: #fff;
   font-size: 26px;
-  cursor: pointer;
 }
 
 .burger-menu {
   position: absolute;
   bottom: 70px;
-  left: 0;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   display: none;
   flex-direction: column;
   min-width: 240px;
-  overflow: hidden;
 }
 
 .burger-menu a,
@@ -171,19 +161,7 @@ body {
   border: none;
   background: none;
   text-align: left;
-  font-size: 15px;
   cursor: pointer;
-  width: 100%;
-}
-
-.burger-menu a {
-  text-decoration: none;
-  color: #000;
-}
-
-.burger-menu a:hover,
-.burger-menu button:hover {
-  background: #f0f0f0;
 }
 </style>
 </head>
@@ -191,26 +169,23 @@ body {
 <body oncontextmenu="return false;">
 
 <nav class="navbar">
-  <div style="color: black;" class="logo-text">Neşeli Çınar</div>
-  <form action="https://neslicinar1150-lgtm.github.io/neseli-cinar-site/cinarama2.html" method="GET">
-  <input 
-    type="search" 
-    name="q" 
-    placeholder="Ara..."
-    required
-  >
-</form>
+  <div class="logo-text">Neşeli Çınar</div>
+
+  <div class="search-wrapper">
+    <input type="search" id="searchInput" placeholder="Ara...">
+    <span id="clearInput">✖</span>
+  </div>
+
+  <button id="openKeyboardBtn">⌨️</button>
 </nav>
 
-<!-- OVERLAY -->
 <div id="overlay"></div>
 
-<!-- BURGER MENÜ -->
 <div class="burger-container">
   <button id="burgerBtn">☰</button>
   <div id="burgerMenu" class="burger-menu">
     <a href="Dikkat.html">📥 Sitemizin kısayolunu indir</a>
-    <button id="reloadPage">🔄 Sayfayı yeniden başlat</button>
+    <button id="reloadPage">🔄 Sayfayı yenile</button>
   </div>
 </div>
 
@@ -226,218 +201,108 @@ body {
 <a href="sikayetveistek.html" class="sabit-buton">İstek ve Şikayetleriniz</a>
 <button id="topBtn">↑</button>
 
-<!-- KLAVYE HTML -->
+<!-- KLAVYE -->
 <div id="keyboard" class="keyboard">
 
+<div class="key-row">
+  <button class="key wide" id="clearAll">Temizle</button>
+  <button class="key wide" id="closeKeyboard">Kapat</button>
+</div>
+
+<div id="symbols" style="display:none">
   <div class="key-row">
-    <button class="key wide" id="clearAll">Hepsini Temizle</button>
-    <button class="key wide" id="closeKeyboard">Klavyeyi Gizle</button>
+    <button class="key sym">?</button><button class="key sym">!</button>
+    <button class="key sym">@</button><button class="key sym">#</button>
+    <button class="key sym">%</button>
   </div>
-
-  <div id="symbols" style="display:none;">
-    <div class="key-row">
-      <button class="key sym">&</button>
-      <button class="key sym">?</button>
-      <button class="key sym">!</button>
-      <button class="key sym">@</button>
-      <button class="key sym">#</button>
-      <button class="key sym">%</button>
-      <button class="key sym">(</button>
-      <button class="key sym">)</button>
-    </div>
-    <div class="key-row">
-      <button class="key sym">+</button>
-      <button class="key sym">-</button>
-      <button class="key sym">=</button>
-      <button class="key sym">.</button>
-      <button class="key sym">,</button>
-      <button class="key wide" id="abc">ABC</button>
-    </div>
-  </div>
-
-  <div id="letters">
-    <div class="key-row">
-      <button class="key num">1</button><button class="key num">2</button>
-      <button class="key num">3</button><button class="key num">4</button>
-      <button class="key num">5</button><button class="key num">6</button>
-      <button class="key num">7</button><button class="key num">8</button>
-      <button class="key num">9</button><button class="key num">0</button>
-    </div>
-
-    <div class="key-row">
-      <button class="key letter">Q</button><button class="key letter">W</button>
-      <button class="key letter">E</button><button class="key letter">R</button>
-      <button class="key letter">T</button><button class="key letter">Y</button>
-      <button class="key letter">U</button><button class="key letter">I</button>
-      <button class="key letter">O</button><button class="key letter">P</button>
-    </div>
-
-    <div class="key-row">
-      <button class="key letter">A</button><button class="key letter">S</button>
-      <button class="key letter">D</button><button class="key letter">F</button>
-      <button class="key letter">G</button><button class="key letter">H</button>
-      <button class="key letter">J</button><button class="key letter">K</button>
-      <button class="key letter">L</button>
-      <button class="key letter">Ş</button>
-    </div>
-
-    <div class="key-row">
-      <button class="key wide" id="caps">↑↑</button>
-      <button class="key letter">Z</button><button class="key letter">X</button>
-      <button class="key letter">C</button><button class="key letter">V</button>
-      <button class="key letter">B</button><button class="key letter">N</button>
-      <button class="key letter">M</button>
-      <button class="key letter">Ç</button>
-      <button class="key wide" id="backspace">⌫</button>
-    </div>
-
-    <div class="key-row">
-      <button class="key wide" id="shift">↑</button>
-      <button class="key letter">Ğ</button>
-      <button class="key letter">Ü</button>
-      <button class="key letter">Ö</button>
-      <button class="key wide" id="showSymbols">?&</button>
-      <button class="key space">Boşluk</button>
-    </div>
+  <div class="key-row">
+    <button class="key wide" id="abc">ABC</button>
   </div>
 </div>
 
-<script>
-// YUKARI ÇIK
-const btn = document.getElementById("topBtn");
-window.addEventListener("scroll", () => {
-  btn.style.display = window.scrollY > 300 ? "block" : "none";
-});
-btn.onclick = () => window.scrollTo({top:0,behavior:"smooth"});
+<div id="letters">
+  <div class="key-row">
+    <button class="key letter">A</button>
+    <button class="key letter">B</button>
+    <button class="key letter">C</button>
+    <button class="key wide" id="backspace">⌫</button>
+  </div>
+  <div class="key-row">
+    <button class="key wide" id="showSymbols">?&</button>
+    <button class="key space">Boşluk</button>
+  </div>
+</div>
+</div>
 
-// ARAMA + X
+<script>
 const searchInput = document.getElementById("searchInput");
 const clearInput = document.getElementById("clearInput");
-
-searchInput.addEventListener("input", function () {
-  let value = this.value.toLowerCase();
-  clearInput.style.display = value ? "block" : "none";
-
-  document.querySelectorAll("#searchArea *").forEach(el => {
-    if (el.children.length === 0) {
-      el.style.display = el.innerText.toLowerCase().includes(value) ? "" : "none";
-    }
-  });
-});
-
-clearInput.onclick = () => {
-  searchInput.value = "";
-  searchInput.dispatchEvent(new Event("input"));
-};
-
-// KLAVYE
-const openKeyboardBtn = document.getElementById("openKeyboardBtn");
 const keyboard = document.getElementById("keyboard");
-const closeKeyboard = document.getElementById("closeKeyboard");
 
-openKeyboardBtn.onclick = () => { keyboard.style.display="block"; searchInput.focus(); };
-closeKeyboard.onclick = () => keyboard.style.display="none";
+searchInput.oninput = () => {
+  clearInput.style.display = searchInput.value ? "block" : "none";
+  document.querySelectorAll("#searchArea a").forEach(a=>{
+    a.style.display = a.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) ? "" : "none";
+  });
+};
 
-let shift=false, caps=false;
+clearInput.onclick = () => { searchInput.value=""; searchInput.oninput(); };
 
-document.querySelectorAll(".letter,.num,.sym").forEach(k=>{
-  k.onclick=()=>{
-    let c=k.innerText;
-    if(k.classList.contains("letter")) c=(shift||caps)?c:c.toLowerCase();
-    searchInput.value+=c;
-    searchInput.dispatchEvent(new Event("input"));
-    if(shift){shift=false;shiftBtn.classList.remove("active")}
-  }
+document.getElementById("openKeyboardBtn").onclick=()=>keyboard.style.display="block";
+document.getElementById("closeKeyboard").onclick=()=>keyboard.style.display="none";
+
+document.querySelectorAll(".letter,.sym").forEach(b=>{
+  b.onclick=()=>{
+    searchInput.value+=b.innerText;
+    searchInput.oninput();
+  };
 });
-
-const shiftBtn=document.getElementById("shift");
-shiftBtn.onclick=()=>shiftBtn.classList.toggle("active",shift=!shift);
-
-const capsBtn=document.getElementById("caps");
-capsBtn.onclick=()=>capsBtn.classList.toggle("active",caps=!caps);
-
-const backspace = document.getElementById("backspace");
-backspace.onclick = () => {
-  searchInput.value = searchInput.value.slice(0, -1);
-  searchInput.dispatchEvent(new Event("input"));
-};
-
-const clearAll = document.getElementById("clearAll");
-clearAll.onclick = () => {
-  searchInput.value = "";
-  searchInput.dispatchEvent(new Event("input"));
-};
 
 document.querySelector(".space").onclick=()=>{
   searchInput.value+=" ";
-  searchInput.dispatchEvent(new Event("input"));
+  searchInput.oninput();
 };
 
-// KLAVYE SÜRÜKLEME
-let touchDrag=false, touchOffsetX=0, touchOffsetY=0;
-keyboard.addEventListener("touchstart", e=>{
-  touchDrag=true; keyboard.classList.add("dragging");
-  const touch = e.touches[0];
-  const rect = keyboard.getBoundingClientRect();
-  touchOffsetX = touch.clientX - rect.left;
-  touchOffsetY = touch.clientY - rect.top;
-  keyboard.style.transform="none";
-  keyboard.style.left = rect.left + "px";
-  keyboard.style.top = rect.top + "px";
-  keyboard.style.bottom="auto";
-},{passive:true});
-
-document.addEventListener("touchmove", e=>{
-  if(!touchDrag) return;
-  const touch = e.touches[0];
-  keyboard.style.left = (touch.clientX - touchOffsetX) + "px";
-  keyboard.style.top = (touch.clientY - touchOffsetY) + "px";
-},{passive:true});
-
-document.addEventListener("touchend", ()=>{
-  touchDrag=false; keyboard.classList.remove("dragging");
-});
-
-let mouseDrag=false, mouseOffsetX=0, mouseOffsetY=0;
-keyboard.addEventListener("mousedown", e=>{
-  mouseDrag=true; keyboard.classList.add("dragging");
-  const rect = keyboard.getBoundingClientRect();
-  mouseOffsetX = e.clientX - rect.left;
-  mouseOffsetY = e.clientY - rect.top;
-  keyboard.style.transform="none";
-  keyboard.style.left = rect.left + "px";
-  keyboard.style.top = rect.top + "px";
-  keyboard.style.bottom="auto";
-});
-
-document.addEventListener("mousemove", e=>{
-  if(!mouseDrag) return;
-  keyboard.style.left = (e.clientX - mouseOffsetX) + "px";
-  keyboard.style.top = (e.clientY - mouseOffsetY) + "px";
-});
-
-document.addEventListener("mouseup", ()=>{
-  mouseDrag=false; keyboard.classList.remove("dragging");
-});
-
-// BURGER MENÜ
-const burgerBtn = document.getElementById("burgerBtn");
-const burgerMenu = document.getElementById("burgerMenu");
-const overlay = document.getElementById("overlay");
-const reloadPage = document.getElementById("reloadPage");
-
-burgerBtn.onclick = () => {
-  const open = burgerMenu.style.display === "flex";
-  burgerMenu.style.display = open ? "none" : "flex";
-  overlay.style.display = open ? "none" : "block";
+document.getElementById("backspace").onclick=()=>{
+  searchInput.value=searchInput.value.slice(0,-1);
+  searchInput.oninput();
 };
 
-overlay.onclick = () => {
-  burgerMenu.style.display = "none";
-  overlay.style.display = "none";
+document.getElementById("clearAll").onclick=()=>{
+  searchInput.value="";
+  searchInput.oninput();
 };
 
-reloadPage.onclick = () => location.reload();
+document.getElementById("showSymbols").onclick=()=>{
+  letters.style.display="none";
+  symbols.style.display="block";
+};
+
+document.getElementById("abc").onclick=()=>{
+  symbols.style.display="none";
+  letters.style.display="block";
+};
+
+const burgerBtn=document.getElementById("burgerBtn");
+const burgerMenu=document.getElementById("burgerMenu");
+const overlay=document.getElementById("overlay");
+
+burgerBtn.onclick=()=>{
+  const open=burgerMenu.style.display==="flex";
+  burgerMenu.style.display=open?"none":"flex";
+  overlay.style.display=open?"none":"block";
+};
+
+overlay.onclick=()=>{
+  burgerMenu.style.display="none";
+  overlay.style.display="none";
+};
+
+document.getElementById("reloadPage").onclick=()=>location.reload();
+
+const topBtn=document.getElementById("topBtn");
+window.onscroll=()=>topBtn.style.display=window.scrollY>300?"block":"none";
+topBtn.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
 </script>
 
 </body>
