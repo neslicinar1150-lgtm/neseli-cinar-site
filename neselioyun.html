@@ -1,199 +1,154 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Sayı Tahmin Oyunu</title>
+<meta charset="UTF-8">
+<title>Sayı Tahmin Oyunu</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#c8f0c8 url("Resimler/Çınar ağacın logosu.png") no-repeat center bottom/300px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
 
-      background-image: url("Resimler/Çınar ağacın logosu.png");
-      background-repeat: no-repeat;
-      background-position: center bottom;
-      background-size: 300px;
-      background-color: #c8f0c8;
+.oyun{
+  background:#fff;
+  padding:25px;
+  width:330px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+input,button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  font-size:16px;
+}
 
-    .oyun {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 25px;
-      width: 330px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+/* 🔽 SABİT SAĞ ALT MENÜ */
+.sabit-menu{
+  position:fixed;
+  right:15px;
+  bottom:15px;
+  z-index:9999;
+}
 
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-    }
+.menu-icerik{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:8px;
+}
 
-    /* 🔽 SAĞ ALT SABİT MENÜ */
-    .sabit-menu {
-      position: fixed;
-      right: 15px;
-      bottom: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-      z-index: 9999;
-    }
+.menu-icerik button{
+  border:none;
+  color:#fff;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    .menu-buton {
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    }
+.fullscreen{background:#222}
+.reset{background:#4caf50}
+.paylas{background:#2196f3}
+.cikis{background:#e53935}
 
-    .menu-ac {
-      background: #333;
-      color: white;
-    }
+.menu-ac{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#333;
+  color:#fff;
+  font-size:22px;
+  border:none;
+  cursor:pointer;
+}
 
-    .menu-icerik {
-      display: none;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 5px;
-    }
-
-    .menu-icerik button {
-      width: 180px;
-      border-radius: 10px;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-
-    .fullscreen { background: #222; }
-    .reset { background: #4caf50; }
-    .paylas { background: #2196f3; }
-
-    /* 📱 Küçük ekran uyumu */
-    @media (max-width: 480px) {
-      .menu-icerik button {
-        width: 150px;
-        font-size: 14px;
-      }
-    }
-  </style>
+/* 📱 MOBİLDE MENÜ KAPALI */
+@media(max-width:768px){
+  .menu-icerik{display:none}
+}
+</style>
 </head>
 <body>
 
-  <div class="oyun" id="oyunAlani">
-    <h2>🎯 Sayı Tahmin Oyunu</h2>
-    <p>1–10 arasında bir sayı tuttum</p>
-    <p>❤️ Hak: <span id="hak">3</span> | 🔁 Tur: <span id="tur">1</span></p>
+<div class="oyun" id="oyunAlani">
+  <h2>🎯 Sayı Tahmin Oyunu</h2>
+  <p>❤️ Hak: <span id="hak">3</span> | 🔁 Tur: <span id="tur">1</span></p>
+  <input type="number" id="tahmin" placeholder="Tahminin">
+  <button onclick="tahminEt()">Tahmin Et</button>
+  <h3 id="sonuc"></h3>
+</div>
 
-    <input type="number" id="tahmin" placeholder="Tahminin">
-    <button onclick="tahminEt()">Tahmin Et</button>
-
-    <h3 id="sonuc"></h3>
+<!-- 🔽 SAĞ ALT MENÜ -->
+<div class="sabit-menu">
+  <div class="menu-icerik" id="menu">
+    <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
+    <button class="cikis" id="cikisBtn" onclick="tamEkranCik()" style="display:none">
+      ❌ Tam Ekrandan Çık
+    </button>
+    <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
+    <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
   </div>
+  <button class="menu-ac" onclick="menuAc()">☰</button>
+</div>
 
-  <!-- 🔽 SAĞ ALT MENÜ -->
-  <div class="sabit-menu">
-    <div class="menu-icerik" id="menuIcerik">
-      <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
-      <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
-      <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
-    </div>
+<script>
+let tutulanSayi, hak, tur;
+oyunuBaslat();
 
-    <button class="menu-buton menu-ac" onclick="menuAcKapat()">☰</button>
-  </div>
+function oyunuBaslat(){
+  tutulanSayi=Math.floor(Math.random()*10)+1;
+  hak=3; tur=1;
+  hakGuncelle();
+}
 
-  <script>
-    let tutulanSayi;
-    let hak;
-    let tur;
+function hakGuncelle(){
+  hak.innerText=hak;
+  tur.innerText=tur;
+}
 
-    oyunuBaslat();
+function tahminEt(){
+  let g=+tahmin.value;
+  if(!g)return alert("Sayı gir");
+  if(g===tutulanSayi) return sonuc.innerText="🎉 Kazandın!";
+  hak--; hak.innerText=hak;
+  if(hak===0) return sonuc.innerText="😢 Bitti: "+tutulanSayi;
+  tur++; tur.innerText=tur;
+  sonuc.innerText=g<tutulanSayi?"📈 Büyük":"📉 Küçük";
+}
 
-    function oyunuBaslat() {
-      tutulanSayi = Math.floor(Math.random() * 10) + 1;
-      hak = 3;
-      tur = 1;
-      document.getElementById("hak").innerText = hak;
-      document.getElementById("tur").innerText = tur;
-      document.getElementById("sonuc").innerText = "";
-      document.getElementById("tahmin").value = "";
-    }
+function menuAc(){
+  let m=document.getElementById("menu");
+  m.style.display=m.style.display==="flex"?"none":"flex";
+}
 
-    function tahminEt() {
-      let girilen = Number(document.getElementById("tahmin").value);
-      let sonuc = document.getElementById("sonuc");
+function tamEkran(){
+  oyunAlani.requestFullscreen();
+}
 
-      if (!girilen) {
-        alert("Bir sayı gir!");
-        return;
-      }
+function tamEkranCik(){
+  document.exitFullscreen();
+}
 
-      if (girilen === tutulanSayi) {
-        sonuc.innerText = "🎉 Tebrikler! " + tur + ". turda kazandın!";
-        return;
-      }
+/* 🎯 TAM EKRAN ALGILAMA */
+document.addEventListener("fullscreenchange",()=>{
+  cikisBtn.style.display=document.fullscreenElement?"block":"none";
+});
 
-      hak--;
-      document.getElementById("hak").innerText = hak;
+/* 🖥️ MASAÜSTÜNDE OTOMATİK AÇIK */
+if(window.innerWidth>768){
+  document.getElementById("menu").style.display="flex";
+}
 
-      if (hak === 0) {
-        sonuc.innerText = "😢 Hakkın bitti! Sayı: " + tutulanSayi;
-        return;
-      }
-
-      tur++;
-      document.getElementById("tur").innerText = tur;
-
-      sonuc.innerText =
-        girilen < tutulanSayi
-        ? "📈 Daha BÜYÜK bir sayı dene"
-        : "📉 Daha KÜÇÜK bir sayı dene";
-    }
-
-    function skoruPaylas() {
-      let tarih = new Date().toLocaleDateString("tr-TR");
-      let mesaj = "Ben " + tarih + " tarihinde " + tur + " hakkımı denedim.";
-
-      if (navigator.share) {
-        navigator.share({ title: "Sayı Tahmin Oyunu", text: mesaj });
-      } else {
-        navigator.clipboard.writeText(mesaj);
-        alert("Paylaşım metni kopyalandı:\n\n" + mesaj);
-      }
-    }
-
-    function yenidenBasla() {
-      oyunuBaslat();
-    }
-
-    function tamEkran() {
-      let alan = document.getElementById("oyunAlani");
-      if (!document.fullscreenElement) {
-        alan.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    }
-
-    function menuAcKapat() {
-      let menu = document.getElementById("menuIcerik");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
-  </script>
+function yenidenBasla(){oyunuBaslat()}
+function skoruPaylas(){alert("Paylaşım hazır")}
+</script>
 
 </body>
 </html>
