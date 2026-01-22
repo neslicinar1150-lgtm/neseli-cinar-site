@@ -8,6 +8,7 @@
 <link rel="icon" href="./1A32B532-738D-4DD5-BA6B-80801E146D9B.png">
 
 <style>
+
 .logo-text{
   font-family: "Fredoka", sans-serif;
   font-size: 60px;
@@ -28,47 +29,31 @@ body {
 /* NAVBAR */
 .navbar {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 60px;
   background: #fff;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
   padding: 0 20px;
   z-index: 1000;
 }
 
-/* SEARCH */
-.search-wrapper {
-  position: relative;
-}
-
-.search-wrapper input {
-  padding: 6px 30px 6px 10px;
-}
-
-#clearInput {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* TOP BUTTON */
+/* YUKARI ÇIK */
 #topBtn {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  padding: 12px 16px;
+  font-size: 16px;
   border: none;
   border-radius: 50%;
-  padding: 12px 16px;
   display: none;
   background: #333;
   color: #fff;
+  z-index: 900;
 }
 
 /* SABİT BUTON */
@@ -77,57 +62,24 @@ body {
   bottom: 20px;
   left: 20px;
   background: #00FF00;
+  color: #000;
   padding: 12px 18px;
   border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
-  color: #000;
+  z-index: 999;
 }
 
-/* KLAVYE */
-.keyboard {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #eee;
-  padding: 10px;
-  border-radius: 12px;
-  display: none;
-  z-index: 9999;
-  cursor: grab;
-}
-
-.keyboard.dragging { cursor: grabbing; }
-
-.key-row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5px;
-}
-
-.key {
-  padding: 10px 14px;
-  margin: 3px;
-  border: none;
-  border-radius: 6px;
-  background: #fff;
-  cursor: pointer;
-}
-
-.key.active { background: #00ff00; }
-.space { width: 200px; }
-.wide { width: 90px; }
-
-/* BURGER */
+/* OVERLAY */
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.55);
+  background: rgba(0,0,0,0.55);
   display: none;
   z-index: 8000;
 }
 
+/* BURGER */
 .burger-container {
   position: fixed;
   bottom: 90px;
@@ -143,16 +95,36 @@ body {
   background: #000;
   color: #fff;
   font-size: 26px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
+#burgerBtn.active {
+  transform: rotate(90deg);
+}
+
+/* BURGER MENU */
 .burger-menu {
   position: absolute;
   bottom: 70px;
+  left: 0;
   background: #fff;
   border-radius: 12px;
-  display: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   flex-direction: column;
   min-width: 240px;
+  overflow: hidden;
+
+  display: none;
+  transform: translateX(-30px) translateY(20px);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.burger-menu.open {
+  display: flex;
+  transform: translateX(0) translateY(0);
+  opacity: 1;
 }
 
 .burger-menu a,
@@ -161,7 +133,19 @@ body {
   border: none;
   background: none;
   text-align: left;
+  font-size: 15px;
   cursor: pointer;
+  width: 100%;
+}
+
+.burger-menu a {
+  text-decoration: none;
+  color: #000;
+}
+
+.burger-menu a:hover,
+.burger-menu button:hover {
+  background: #f0f0f0;
 }
 </style>
 </head>
@@ -170,22 +154,20 @@ body {
 
 <nav class="navbar">
   <div class="logo-text">Neşeli Çınar</div>
-
-  <div class="search-wrapper">
-    <input type="search" id="searchInput" placeholder="Ara...">
-    <span id="clearInput">✖</span>
-  </div>
-
-  <button id="openKeyboardBtn">⌨️</button>
+  <form action="https://neslicinar1150-lgtm.github.io/neseli-cinar-site/cinarama2.html" method="GET">
+    <input type="search" name="q" placeholder="Ara..." required>
+  </form>
 </nav>
 
+<!-- OVERLAY -->
 <div id="overlay"></div>
 
+<!-- BURGER -->
 <div class="burger-container">
   <button id="burgerBtn">☰</button>
   <div id="burgerMenu" class="burger-menu">
     <a href="Dikkat.html">📥 Sitemizin kısayolunu indir</a>
-    <button id="reloadPage">🔄 Sayfayı yenile</button>
+    <button id="reloadPage">🔄 Sayfayı yeniden başlat</button>
   </div>
 </div>
 
@@ -201,108 +183,40 @@ body {
 <a href="sikayetveistek.html" class="sabit-buton">İstek ve Şikayetleriniz</a>
 <button id="topBtn">↑</button>
 
-<!-- KLAVYE -->
-<div id="keyboard" class="keyboard">
-
-<div class="key-row">
-  <button class="key wide" id="clearAll">Temizle</button>
-  <button class="key wide" id="closeKeyboard">Kapat</button>
-</div>
-
-<div id="symbols" style="display:none">
-  <div class="key-row">
-    <button class="key sym">?</button><button class="key sym">!</button>
-    <button class="key sym">@</button><button class="key sym">#</button>
-    <button class="key sym">%</button>
-  </div>
-  <div class="key-row">
-    <button class="key wide" id="abc">ABC</button>
-  </div>
-</div>
-
-<div id="letters">
-  <div class="key-row">
-    <button class="key letter">A</button>
-    <button class="key letter">B</button>
-    <button class="key letter">C</button>
-    <button class="key wide" id="backspace">⌫</button>
-  </div>
-  <div class="key-row">
-    <button class="key wide" id="showSymbols">?&</button>
-    <button class="key space">Boşluk</button>
-  </div>
-</div>
-</div>
-
 <script>
-const searchInput = document.getElementById("searchInput");
-const clearInput = document.getElementById("clearInput");
-const keyboard = document.getElementById("keyboard");
-
-searchInput.oninput = () => {
-  clearInput.style.display = searchInput.value ? "block" : "none";
-  document.querySelectorAll("#searchArea a").forEach(a=>{
-    a.style.display = a.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) ? "" : "none";
-  });
-};
-
-clearInput.onclick = () => { searchInput.value=""; searchInput.oninput(); };
-
-document.getElementById("openKeyboardBtn").onclick=()=>keyboard.style.display="block";
-document.getElementById("closeKeyboard").onclick=()=>keyboard.style.display="none";
-
-document.querySelectorAll(".letter,.sym").forEach(b=>{
-  b.onclick=()=>{
-    searchInput.value+=b.innerText;
-    searchInput.oninput();
-  };
+// YUKARI ÇIK
+const topBtn = document.getElementById("topBtn");
+window.addEventListener("scroll", () => {
+  topBtn.style.display = window.scrollY > 300 ? "block" : "none";
 });
+topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-document.querySelector(".space").onclick=()=>{
-  searchInput.value+=" ";
-  searchInput.oninput();
+// BURGER MENÜ
+const burgerBtn = document.getElementById("burgerBtn");
+const burgerMenu = document.getElementById("burgerMenu");
+const overlay = document.getElementById("overlay");
+const reloadPage = document.getElementById("reloadPage");
+
+burgerBtn.onclick = (e) => {
+  e.stopPropagation();
+
+  burgerMenu.classList.toggle("open");
+  burgerBtn.classList.toggle("active");
+  burgerBtn.innerHTML = burgerMenu.classList.contains("open") ? "✖" : "☰";
+
+  overlay.style.display = burgerMenu.classList.contains("open")
+    ? "block"
+    : "none";
 };
 
-document.getElementById("backspace").onclick=()=>{
-  searchInput.value=searchInput.value.slice(0,-1);
-  searchInput.oninput();
+overlay.onclick = () => {
+  burgerMenu.classList.remove("open");
+  burgerBtn.classList.remove("active");
+  burgerBtn.innerHTML = "☰";
+  overlay.style.display = "none";
 };
 
-document.getElementById("clearAll").onclick=()=>{
-  searchInput.value="";
-  searchInput.oninput();
-};
-
-document.getElementById("showSymbols").onclick=()=>{
-  letters.style.display="none";
-  symbols.style.display="block";
-};
-
-document.getElementById("abc").onclick=()=>{
-  symbols.style.display="none";
-  letters.style.display="block";
-};
-
-const burgerBtn=document.getElementById("burgerBtn");
-const burgerMenu=document.getElementById("burgerMenu");
-const overlay=document.getElementById("overlay");
-
-burgerBtn.onclick=()=>{
-  const open=burgerMenu.style.display==="flex";
-  burgerMenu.style.display=open?"none":"flex";
-  overlay.style.display=open?"none":"block";
-};
-
-overlay.onclick=()=>{
-  burgerMenu.style.display="none";
-  overlay.style.display="none";
-};
-
-document.getElementById("reloadPage").onclick=()=>location.reload();
-
-const topBtn=document.getElementById("topBtn");
-window.onscroll=()=>topBtn.style.display=window.scrollY>300?"block":"none";
-topBtn.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+reloadPage.onclick = () => location.reload();
 </script>
 
 </body>
