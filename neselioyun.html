@@ -30,36 +30,58 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
-    input, button {
+    input, .oyun button {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
       font-size: 16px;
     }
 
-    button {
+    /* 🔘 Toggle Menü */
+    .toggle-menu {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .toggle-menu button {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
       cursor: pointer;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .menu-btn {
+      background: #333;
     }
 
     .fullscreen {
       background: #222;
-      color: white;
-      border: none;
-      border-radius: 8px;
     }
 
     .reset {
       background: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 8px;
     }
 
     .paylas {
       background: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 8px;
+    }
+
+    .menu-item {
+      display: none;
+    }
+
+    .menu-acik .menu-item {
+      display: block;
     }
   </style>
 </head>
@@ -72,11 +94,16 @@
 
     <input type="number" id="tahmin" placeholder="Tahminin">
     <button onclick="tahminEt()">Tahmin Et</button>
-    <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
-    <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
-    <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
 
     <h3 id="sonuc"></h3>
+  </div>
+
+  <!-- 🔘 Sağ Alt Toggle Menü -->
+  <div class="toggle-menu" id="toggleMenu">
+    <button class="menu-item fullscreen" onclick="tamEkran()">🖥️</button>
+    <button class="menu-item reset" onclick="yenidenBasla()">🔁</button>
+    <button class="menu-item paylas" onclick="skoruPaylas()">📤</button>
+    <button class="menu-btn" onclick="menuToggle()">⚙️</button>
   </div>
 
   <script>
@@ -130,9 +157,7 @@
 
     function skoruPaylas() {
       let tarih = new Date().toLocaleDateString("tr-TR");
-      let mesaj =
-        "Ben " + tarih + " tarihinde " +
-        tur + " hakkımı denedim.";
+      let mesaj = "Ben " + tarih + " tarihinde " + tur + " tur oynadım.";
 
       if (navigator.share) {
         navigator.share({
@@ -151,12 +176,15 @@
 
     function tamEkran() {
       let alan = document.getElementById("oyunAlani");
-
       if (!document.fullscreenElement) {
         alan.requestFullscreen();
       } else {
         document.exitFullscreen();
       }
+    }
+
+    function menuToggle() {
+      document.getElementById("toggleMenu").classList.toggle("menu-acik");
     }
   </script>
 
