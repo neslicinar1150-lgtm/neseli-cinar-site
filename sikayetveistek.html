@@ -44,7 +44,7 @@ input {
 <body>
 <form action="form.php">
 <div id="drop-area">
-    Dosyayı buraya sürükle veya tıkla.
+    İstek ve Şikeyetlerinizi buraya atın. Ya da buraya tıklayın.
 </div>
 <input type="file" id="fileInput">
 <br>
@@ -75,7 +75,7 @@ dropArea.addEventListener("dragover", (e) => {
 // Alandan çıkınca
 dropArea.addEventListener("dragleave", () => {
     dropArea.classList.remove("active");
-    dropArea.innerText = "İstek ve Şikayetlerinizi buraya sürükleyin veya buraya tıklayın.";
+    dropArea.innerText = "İstek ve Şikeyetlerinizi buraya atın. Ya da buraya tıklayın.";
 });
 
 // Bırakınca
@@ -101,7 +101,7 @@ function kontrolVeYukle(file) {
     if (!allowedExtensions.includes(uzanti)) {
         dropArea.innerText = "❌ Geçersiz dosya türü";
         setTimeout(() => {
-            dropArea.innerText = "İstek ve Şikayetlerinizi buraya sürükleyin veya buraya tıklayın.";
+            dropArea.innerText = "İstek ve Şikeyetlerinizi buraya atın. Ya da buraya tıklayın.";
         }, 2000);
         return;
     }
