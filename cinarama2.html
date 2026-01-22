@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <style>
-  
-  /* Sağ alt köşe arama formu */
+<meta charset="UTF-8">
+<title>Arama Sonuçları - ÇınArama</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* Sağ alt köşe arama */
 .sag-alt-arama {
   position: fixed;
   right: 15px;
@@ -24,15 +28,15 @@
   border-color: #ff9900;
 }
 
-  
+/* Ana sayfa butonu */
 .ana-sayfa-buton {
   position: fixed;
   left: 15px;
   bottom: 15px;
-  background-color: #ffcc00;
+  background-color: aliceblue;
   color: #000;
   padding: 10px 14px;
-  border-radius: 30px;
+  border-radius: 100px;
   text-decoration: none;
   font-weight: bold;
   font-size: 14px;
@@ -42,43 +46,41 @@
 }
 
 .ana-sayfa-buton:hover {
-  background-color: #ffb300;
+  background-color: #e6f3ff;
   transform: scale(1.05);
 }
 </style>
-  <meta charset="UTF-8">
-  <title>Arama Sonuçları - ÇınArama</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0>
 </head>
+
 <body>
-<button class="ana-sayfa-buton" style="
-  border-radius: 100px; 
-  background-color: aliceblue;">🏠 Ana Sayfa</button>
+
+<a href="https://neslicinar1150-lgtm.github.io/neseli-cinar-site" class="ana-sayfa-buton">
+🏠 Ana Sayfa
+</a>
+
 <h1>Arama Sonuçları</h1>
 <p id="bilgi"></p>
 <ul id="sonuclar"></ul>
+
 <form 
   action="https://neslicinar1150-lgtm.github.io/neseli-cinar-site/cinarama2.html" 
   method="GET"
   class="sag-alt-arama"
 >
-  <input 
-    type="search" 
-    name="q" 
-    placeholder="Ara..."
-    required
-  >
+  <input type="search" name="q" placeholder="Ara..." required>
 </form>
+
 <script>
 // URL'den arama kelimesi
 const params = new URLSearchParams(window.location.search);
 const query = params.get("q") || "";
 
-// Bilgi yazısı
+// Title + bilgi
+document.title = `"${query}" için arama sonuçları - ÇınArama`;
 document.getElementById("bilgi").textContent =
   `"${query}" için sonuçlar:`;
 
-// JSON'u aynı klasörden al
+// JSON'dan sonuç çek
 fetch("arama.json")
   .then(res => res.json())
   .then(data => {
@@ -99,19 +101,11 @@ fetch("arama.json")
       li.innerHTML = `<a href="${item.url}">${item.baslik}</a>`;
       liste.appendChild(li);
     });
+  })
+  .catch(() => {
+    document.getElementById("sonuclar").innerHTML =
+      "<li>Arama verisi yüklenemedi.</li>";
   });
-  
-  // URL'den arama kelimesi
-const params = new URLSearchParams(window.location.search);
-const query = params.get("q") || "";
-
-// Title'ı değiştir
-document.title = `"${query}" için arama sonuçları - ÇınArama`;
-
-// Bilgi yazısı
-document.getElementById("bilgi").textContent =
-  `"${query}" için sonuçlar:`;
-  
 </script>
 
 </body>
