@@ -119,10 +119,6 @@ input,button{
 
   <h2>🎯 Sayı Tahmin Oyunu</h2>
 
-  <button id="cikisBtn" class="cikis" onclick="tamEkranCik()" style="display:none">
-    ❌ Tam Ekrandan Çık
-  </button>
-
   <p>
     ❤️ Hak: <span id="hak">3</span> |
     🔁 Tur: <span id="tur">1</span>
@@ -131,16 +127,9 @@ input,button{
   <input type="number" id="tahmin" placeholder="Tahminin">
   <button onclick="tahminEt()">Tahmin Et</button>
   <h3 id="sonuc"></h3>
-  <button class="sms" onclick="smsGonder()">SMS ile gönder</button>
-</div>
-
-<div class="sabit-menu">
-  <div class="menu-icerik" id="menu">
-    <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
-    <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
-    <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
-  </div>
-  <button class="menu-ac" onclick="menuAc()">☰</button>
+  <button class="sms" onclick="smsGonder()">SMS ile skoru paylaş</button>
+      <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
+    <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button
 </div>
 
 <script>
