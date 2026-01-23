@@ -87,7 +87,7 @@ input,button{
 
 <body>
 
-<div class="oyun" id="Alan.div">
+<div class="oyun" id="Alan_div">
   <h2>🎯 Sayı Tahmin Oyunu</h2>
 
   <button id="cikisBtn" class="cikis" onclick="tamEkranCik()" style="display:none">
@@ -115,7 +115,7 @@ input,button{
 </div>
 
 <script>
-const Alan = document.getElementById("Alan.div");
+const Alan = document.getElementById("Alan_div");
 const hakEl = document.getElementById("hak");
 const turEl = document.getElementById("tur");
 const tahminInput = document.getElementById("tahmin");
@@ -172,8 +172,24 @@ function menuAc(){
   m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
+function tamEkran(){
+  if (!Alan) return;
+
+  if (Alan.requestFullscreen) {
+    Alan.requestFullscreen();
+  } else if (Alan.webkitRequestFullscreen) {
+    Alan.webkitRequestFullscreen();
+  } else if (Alan.msRequestFullscreen) {
+    Alan.msRequestFullscreen();
+  }
+}
+
 function tamEkranCik(){
-  document.exitFullscreen();
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
 }
 
 document.addEventListener("fullscreenchange",()=>{
@@ -191,67 +207,30 @@ function yenidenBasla(){
 function skoruPaylas() {
   const tarih = new Date().toLocaleDateString("tr-TR");
   const denemeSayisi = 3 - hakSayisi;
-
   const metin = `Ben ${tarih} tarihinde ${denemeSayisi} hakkımı denedim.`;
 
-  // 📋 KOPYALA
   if (navigator.clipboard) {
     navigator.clipboard.writeText(metin)
-      .then(() => {
-        alert("📋 Metin kopyalandı!\n\n" + metin);
-      })
-      .catch(() => {
-        alert("Metin kopyalanamadı ama burada:\n\n" + metin);
-      });
+      .then(() => alert("📋 Metin kopyalandı!\n\n" + metin))
+      .catch(() => alert("Metin kopyalanamadı:\n\n" + metin));
   } else {
-    // Eski tarayıcılar için yedek
     prompt("Metni kopyala:", metin);
   }
 
-  // 📤 Paylaş (destekleyen cihazlarda)
   if (navigator.share) {
-    navigator.share({
-      text: metin
-    });
+    navigator.share({ text: metin });
   }
 }
 
-  function smsGonder() {
+function smsGonder() {
   const numara = prompt("📱 SMS gönderilecek telefon numarasını gir:");
-
   if (!numara) return;
 
   const tarih = new Date().toLocaleDateString("tr-TR");
   const denemeSayisi = 3 - hakSayisi;
-
   const metin = `Ben ${tarih} tarihinde ${denemeSayisi} hakkımı denedim.`;
 
-  // SMS uygulamasını aç
-  const smsLink = `sms:${numara}?body=${encodeURIComponent(metin)}`;
-  window.location.href = smsLink;
-}
-
-  function tamEkran() {
-
-  if (!Alan) return;
-
-  if (Alan.requestFullscreen) {
-    Alan.requestFullscreen();
-  } else if (Alan.webkitRequestFullscreen) { // Safari
-    Alan.webkitRequestFullscreen();
-  } else if (alan.msRequestFullscreen) { // Eski IE
-    Alan.msRequestFullscreen();
-  }
-}
-
-function cikisYap() {
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  } else if (document.webkitFullscreenElement) { // Safari
-    document.webkitExitFullscreen();
-  } else if (document.msFullscreenElement) { // Eski IE
-    document.msExitFullscreen();
-  }
+  window.location.href = `sms:${numara}?body=${encodeURIComponent(metin)}`;
 }
 </script>
 
