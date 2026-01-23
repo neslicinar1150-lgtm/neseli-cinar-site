@@ -87,7 +87,7 @@ input,button{
 
 <body>
 
-<div class="oyun" id="oyunAlani">
+<div class="oyun" id="Alan.div">
   <h2>🎯 Sayı Tahmin Oyunu</h2>
 
   <button id="cikisBtn" class="cikis" onclick="tamEkranCik()" style="display:none">
@@ -115,7 +115,7 @@ input,button{
 </div>
 
 <script>
-const oyunAlani = document.getElementById("oyunAlani");
+const Alan = document.getElementById("Alan.div");
 const hakEl = document.getElementById("hak");
 const turEl = document.getElementById("tur");
 const tahminInput = document.getElementById("tahmin");
@@ -170,10 +170,6 @@ function tahminEt(){
 function menuAc(){
   const m = document.getElementById("menu");
   m.style.display = m.style.display === "flex" ? "none" : "flex";
-}
-
-function tamEkran(){
-  oyunAlani.requestFullscreen();
 }
 
 function tamEkranCik(){
@@ -233,6 +229,29 @@ function skoruPaylas() {
   // SMS uygulamasını aç
   const smsLink = `sms:${numara}?body=${encodeURIComponent(metin)}`;
   window.location.href = smsLink;
+}
+
+  function tamEkran() {
+
+  if (!Alan) return;
+
+  if (Alan.requestFullscreen) {
+    Alan.requestFullscreen();
+  } else if (Alan.webkitRequestFullscreen) { // Safari
+    Alan.webkitRequestFullscreen();
+  } else if (alan.msRequestFullscreen) { // Eski IE
+    Alan.msRequestFullscreen();
+  }
+}
+
+function cikisYap() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else if (document.webkitFullscreenElement) { // Safari
+    document.webkitExitFullscreen();
+  } else if (document.msFullscreenElement) { // Eski IE
+    document.msExitFullscreen();
+  }
 }
 </script>
 
