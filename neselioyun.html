@@ -23,19 +23,31 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#35a6df url("Resimler/Çınar ağacın logosu.png") no-repeat center bottom/300px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   height:100vh;
 }
 
+/* OYUN ALANI */
 .oyun{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
   background:#fff;
   padding:25px;
   width:330px;
   border-radius:15px;
   text-align:center;
   box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+/* NAVBAR (SÜRÜKLEME ALANI) */
+.oyun-navbar{
+  background:aliceblue;
+  display:flex;
+  gap:5px;
+  padding:5px;
+  cursor:move;
+  user-select:none;
 }
 
 input,button{
@@ -91,16 +103,20 @@ input,button{
 <body>
 
 <div class="oyun" id="Alan_div">
-  <navbar style="background-color: aliceblue;">
+
+  <!-- SADECE BURADAN SÜRÜKLENİR -->
+  <div class="oyun-navbar" id="suruklemeAlani">
     <a href="https://neslicinar1150-lgtm.github.io/neseli-cinar-site">
-    <button class="yuvarlak">X</button>
+      <button class="yuvarlak">X</button>
     </a>
     <a href="neselioyun-down.html">
-    <button class="yuvarlak">-</button>
+      <button class="yuvarlak">-</button>
     </a>
     <a href="fullscreen.html">
-    <button class="yuvarlak">[ <> ]</button>
+      <button class="yuvarlak">[ <> ]</button>
     </a>
+  </div>
+
   <h2>🎯 Sayı Tahmin Oyunu</h2>
 
   <button id="cikisBtn" class="cikis" onclick="tamEkranCik()" style="display:none">
@@ -128,6 +144,7 @@ input,button{
 </div>
 
 <script>
+/* ===== OYUN ===== */
 const Alan = document.getElementById("Alan_div");
 const hakEl = document.getElementById("hak");
 const turEl = document.getElementById("tur");
@@ -156,7 +173,6 @@ function guncelle(){
 
 function tahminEt(){
   if(oyunBitti) return;
-
   const g = Number(tahminInput.value);
   if(!g) return alert("Sayı gir");
 
@@ -167,7 +183,6 @@ function tahminEt(){
   }
 
   hakSayisi--;
-
   if(hakSayisi === 0){
     sonuc.innerText = "😢 Bitti! Sayı: " + tutulanSayi;
     oyunBitti = true;
@@ -180,76 +195,73 @@ function tahminEt(){
   guncelle();
 }
 
+/* ===== MENÜ ===== */
 function menuAc(){
   const m = document.getElementById("menu");
   m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
+/* ===== FULLSCREEN ===== */
 function tamEkran(){
-  const elem = document.documentElement;
-
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { // iOS Safari
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
-    elem.msRequestFullscreen();
-  }
+  document.documentElement.requestFullscreen?.();
 }
-
 function tamEkranCik(){
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  }
+  document.exitFullscreen?.();
 }
-
 document.addEventListener("fullscreenchange",()=>{
   cikisBtn.style.display = document.fullscreenElement ? "block" : "none";
 });
 
-if(window.innerWidth > 768){
-  document.getElementById("menu").style.display="flex";
-}
-
-function yenidenBasla(){
-  oyunuBaslat();
-}
-
-function skoruPaylas() {
+/* ===== PAYLAŞIM ===== */
+function skoruPaylas(){
   const tarih = new Date().toLocaleDateString("tr-TR");
-  const denemeSayisi = 3 - hakSayisi;
-  const metin = `Ben ${tarih} tarihinde ${denemeSayisi} hakkımı denedim.`;
-
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(metin)
-      .then(() => alert("📋 Metin kopyalandı!\n\n" + metin))
-      .catch(() => alert("Metin kopyalanamadı:\n\n" + metin));
-  } else {
-    prompt("Metni kopyala:", metin);
-  }
-
-  if (navigator.share) {
-    navigator.share({ text: metin });
-  }
+  const metin = `Ben ${tarih} tarihinde ${3-hakSayisi} hakkımı denedim.`;
+  navigator.clipboard?.writeText(metin);
+  navigator.share?.({text:metin});
 }
 
-function smsGonder() {
-  const numara = prompt("📱 SMS gönderilecek telefon numarasını gir:");
-  if (!numara) return;
-
+function smsGonder(){
+  const numara = prompt("📱 Telefon numarası:");
+  if(!numara) return;
   const tarih = new Date().toLocaleDateString("tr-TR");
-  const denemeSayisi = 3 - hakSayisi;
-  const metin = `Ben ${tarih} tarihinde ${denemeSayisi} hakkımı denedim.`;
-
-  window.location.href = `sms:${numara}?body=${encodeURIComponent(metin)}`;
+  const metin = `Ben ${tarih} tarihinde ${3-hakSayisi} hakkımı denedim.`;
+  location.href=`sms:${numara}?body=${encodeURIComponent(metin)}`;
 }
 
-  tahminInput.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") {
-    tahminEt();
-  }
+/* ===== SÜRÜKLEME (MOBİL + PC) ===== */
+const dragArea = document.getElementById("suruklemeAlani");
+let surukleniyor = false, ofsetX = 0, ofsetY = 0;
+
+function basla(x,y){
+  surukleniyor = true;
+  const rect = Alan.getBoundingClientRect();
+  ofsetX = x - rect.left;
+  ofsetY = y - rect.top;
+}
+
+function hareket(x,y){
+  if(!surukleniyor) return;
+  Alan.style.left = (x - ofsetX) + "px";
+  Alan.style.top  = (y - ofsetY) + "px";
+  Alan.style.transform = "none";
+}
+
+dragArea.addEventListener("mousedown", e => basla(e.clientX,e.clientY));
+document.addEventListener("mousemove", e => hareket(e.clientX,e.clientY));
+document.addEventListener("mouseup", ()=>surukleniyor=false);
+
+dragArea.addEventListener("touchstart", e=>{
+  const t = e.touches[0];
+  basla(t.clientX,t.clientY);
+});
+document.addEventListener("touchmove", e=>{
+  const t = e.touches[0];
+  hareket(t.clientX,t.clientY);
+});
+document.addEventListener("touchend", ()=>surukleniyor=false);
+
+tahminInput.addEventListener("keydown",e=>{
+  if(e.key==="Enter") tahminEt();
 });
 </script>
 
