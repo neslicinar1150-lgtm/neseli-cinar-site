@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sayı Tahmin Oyunu</title>
 
 <style>
 .yuvarlak{border-radius:100px}
-
 .sms{background:#00ff00}
-  
-.cikis{
-  background:#e53935;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:10px;
-  cursor:pointer;
-}
 
 body{
   margin:0;
@@ -40,7 +30,14 @@ body{
   box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
-/* NAVBAR (SÜRÜKLEME ALANI) */
+/* FULLSCREEN GÖRÜNÜM */
+.oyun:fullscreen{
+  width:100vw;
+  height:100vh;
+  border-radius:0;
+}
+
+/* NAVBAR */
 .oyun-navbar{
   background:aliceblue;
   display:flex;
@@ -57,46 +54,8 @@ input,button{
   font-size:16px;
 }
 
-/* SABİT MENÜ */
-.sabit-menu{
-  position:fixed;
-  right:15px;
-  bottom:15px;
-  z-index:9999;
-}
-
-.menu-icerik{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  margin-bottom:8px;
-}
-
-.menu-icerik button{
-  border:none;
-  color:#fff;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.fullscreen{background:#222}
 .reset{background:#4caf50}
 .paylas{background:#2196f3}
-
-.menu-ac{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#333;
-  color:#fff;
-  font-size:22px;
-  border:none;
-  cursor:pointer;
-}
-
-@media(max-width:768px){
-  .menu-icerik{display:none}
-}
 </style>
 </head>
 
@@ -104,7 +63,6 @@ input,button{
 
 <div class="oyun" id="Alan_div">
 
-  <!-- SADECE BURADAN SÜRÜKLENİR -->
   <div class="oyun-navbar" id="suruklemeAlani">
     <a href="https://neslicinar1150-lgtm.github.io/neseli-cinar-site">
       <button class="yuvarlak">X</button>
@@ -112,9 +70,7 @@ input,button{
     <a href="neselioyun-down.html">
       <button class="yuvarlak">-</button>
     </a>
-    <a href="fullscreen.html">
-      <button class="yuvarlak">[ <> ]</button>
-    </a>
+    <button class="yuvarlak" id="fullscreenBtn" onclick="oyunTamEkran()">[ <> ]</button>
   </div>
 
   <h2>🎯 Sayı Tahmin Oyunu</h2>
@@ -127,9 +83,11 @@ input,button{
   <input type="number" id="tahmin" placeholder="Tahminin">
   <button onclick="tahminEt()">Tahmin Et</button>
   <h3 id="sonuc"></h3>
+
   <button class="sms" onclick="smsGonder()">SMS ile skoru paylaş</button>
-      <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
-    <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
+  <button class="reset" onclick="yenidenBasla()">🔁 Yeniden Başlat</button>
+  <button class="paylas" onclick="skoruPaylas()">📤 Skoru Paylaş</button>
+
 </div>
 
 <script>
@@ -139,9 +97,11 @@ const hakEl = document.getElementById("hak");
 const turEl = document.getElementById("tur");
 const tahminInput = document.getElementById("tahmin");
 const sonuc = document.getElementById("sonuc");
-const cikisBtn = document.getElementById("cikisBtn");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
 
-let tutulanSayi, hakSayisi, turSayisi, oyunBitti=false;
+let tutulanSayi, hakSayisi, turSayisi;
+let oyunBitti = false;
+let fullscreenAktif = false;
 
 oyunuBaslat();
 
@@ -154,6 +114,8 @@ function oyunuBaslat(){
   tahminInput.value = "";
   guncelle();
 }
+
+function yenidenBasla(){ oyunuBaslat(); }
 
 function guncelle(){
   hakEl.innerText = hakSayisi;
@@ -184,21 +146,24 @@ function tahminEt(){
   guncelle();
 }
 
-/* ===== MENÜ ===== */
-function menuAc(){
-  const m = document.getElementById("menu");
-  m.style.display = m.style.display === "flex" ? "none" : "flex";
+/* ===== FULLSCREEN (SADECE DIV) ===== */
+function oyunTamEkran(){
+  if(!document.fullscreenElement){
+    Alan.requestFullscreen();
+    fullscreenBtn.innerText = "[ >< ]";
+    fullscreenAktif = true;
+  }else{
+    document.exitFullscreen();
+    fullscreenBtn.innerText = "[ <> ]";
+    fullscreenAktif = false;
+  }
 }
 
-/* ===== FULLSCREEN ===== */
-function tamEkran(){
-  document.documentElement.requestFullscreen?.();
-}
-function tamEkranCik(){
-  document.exitFullscreen?.();
-}
 document.addEventListener("fullscreenchange",()=>{
-  cikisBtn.style.display = document.fullscreenElement ? "block" : "none";
+  if(!document.fullscreenElement){
+    fullscreenBtn.innerText = "[ <> ]";
+    fullscreenAktif = false;
+  }
 });
 
 /* ===== PAYLAŞIM ===== */
@@ -214,40 +179,41 @@ function smsGonder(){
   if(!numara) return;
   const tarih = new Date().toLocaleDateString("tr-TR");
   const metin = `Ben ${tarih} tarihinde ${3-hakSayisi} hakkımı denedim.`;
-  location.href=`sms:${numara}?body=${encodeURIComponent(metin)}`;
+  location.href = `sms:${numara}?body=${encodeURIComponent(metin)}`;
 }
 
-/* ===== SÜRÜKLEME (MOBİL + PC) ===== */
+/* ===== SÜRÜKLEME (FULLSCREEN'DE KAPALI) ===== */
 const dragArea = document.getElementById("suruklemeAlani");
-let surukleniyor = false, ofsetX = 0, ofsetY = 0;
+let surukleniyor=false, ofsetX=0, ofsetY=0;
 
 function basla(x,y){
-  surukleniyor = true;
-  const rect = Alan.getBoundingClientRect();
-  ofsetX = x - rect.left;
-  ofsetY = y - rect.top;
+  if(fullscreenAktif) return;
+  surukleniyor=true;
+  const r=Alan.getBoundingClientRect();
+  ofsetX=x-r.left;
+  ofsetY=y-r.top;
 }
 
 function hareket(x,y){
-  if(!surukleniyor) return;
-  Alan.style.left = (x - ofsetX) + "px";
-  Alan.style.top  = (y - ofsetY) + "px";
-  Alan.style.transform = "none";
+  if(!surukleniyor || fullscreenAktif) return;
+  Alan.style.left=(x-ofsetX)+"px";
+  Alan.style.top =(y-ofsetY)+"px";
+  Alan.style.transform="none";
 }
 
-dragArea.addEventListener("mousedown", e => basla(e.clientX,e.clientY));
-document.addEventListener("mousemove", e => hareket(e.clientX,e.clientY));
-document.addEventListener("mouseup", ()=>surukleniyor=false);
+dragArea.addEventListener("mousedown",e=>basla(e.clientX,e.clientY));
+document.addEventListener("mousemove",e=>hareket(e.clientX,e.clientY));
+document.addEventListener("mouseup",()=>surukleniyor=false);
 
-dragArea.addEventListener("touchstart", e=>{
-  const t = e.touches[0];
+dragArea.addEventListener("touchstart",e=>{
+  const t=e.touches[0];
   basla(t.clientX,t.clientY);
 });
-document.addEventListener("touchmove", e=>{
-  const t = e.touches[0];
+document.addEventListener("touchmove",e=>{
+  const t=e.touches[0];
   hareket(t.clientX,t.clientY);
 });
-document.addEventListener("touchend", ()=>surukleniyor=false);
+document.addEventListener("touchend",()=>surukleniyor=false);
 
 tahminInput.addEventListener("keydown",e=>{
   if(e.key==="Enter") tahminEt();
