@@ -5,6 +5,8 @@
 <title>Sayı Tahmin Oyunu</title>
 
 <style>
+.sms{background:#9c27b0}
+  
 .cikis{
   background:#e53935;
   color:#fff;
@@ -100,6 +102,7 @@ input,button{
   <input type="number" id="tahmin" placeholder="Tahminin">
   <button onclick="tahminEt()">Tahmin Et</button>
   <h3 id="sonuc"></h3>
+  <button class="sms" onclick="smsGonder()">📱 SMS Gönder</button>
 </div>
 
 <div class="sabit-menu">
@@ -189,8 +192,47 @@ function yenidenBasla(){
   oyunuBaslat();
 }
 
-function skoruPaylas(){
-  alert(`Ben ${turSayisi}. turda oynadım!`);
+function skoruPaylas() {
+  const tarih = new Date().toLocaleDateString("tr-TR");
+  const denemeSayisi = 3 - hakSayisi;
+
+  const metin = `Ben ${tarih} tarihinde ${denemeSayisi} hakkımı denedim.`;
+
+  // 📋 KOPYALA
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(metin)
+      .then(() => {
+        alert("📋 Metin kopyalandı!\n\n" + metin);
+      })
+      .catch(() => {
+        alert("Metin kopyalanamadı ama burada:\n\n" + metin);
+      });
+  } else {
+    // Eski tarayıcılar için yedek
+    prompt("Metni kopyala:", metin);
+  }
+
+  // 📤 Paylaş (destekleyen cihazlarda)
+  if (navigator.share) {
+    navigator.share({
+      text: metin
+    });
+  }
+}
+
+  function smsGonder() {
+  const numara = prompt("📱 SMS gönderilecek telefon numarasını gir:");
+
+  if (!numara) return;
+
+  const tarih = new Date().toLocaleDateString("tr-TR");
+  const denemeSayisi = 3 - hakSayisi;
+
+  const metin = `Ben ${tarih} tarihinde ${denemeSayisi} hakkımı denedim.`;
+
+  // SMS uygulamasını aç
+  const smsLink = `sms:${numara}?body=${encodeURIComponent(metin)}`;
+  window.location.href = smsLink;
 }
 </script>
 
