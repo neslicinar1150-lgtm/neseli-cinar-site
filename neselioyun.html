@@ -173,14 +173,14 @@ function menuAc(){
 }
 
 function tamEkran(){
-  if (!Alan) return;
+  const elem = document.documentElement;
 
-  if (Alan.requestFullscreen) {
-    Alan.requestFullscreen();
-  } else if (Alan.webkitRequestFullscreen) {
-    Alan.webkitRequestFullscreen();
-  } else if (Alan.msRequestFullscreen) {
-    Alan.msRequestFullscreen();
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { // iOS Safari
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
   }
 }
 
