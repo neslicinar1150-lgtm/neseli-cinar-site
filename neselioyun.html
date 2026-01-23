@@ -57,7 +57,7 @@ input,button{
 .reset{background:#4caf50}
 .paylas{background:#2196f3}
 
-/* ===== SAĞ TIK MENÜSÜ ===== */
+/* SAĞ TIK MENÜSÜ */
 #sagTikMenu{
   position:fixed;
   background:#fff;
@@ -66,7 +66,7 @@ input,button{
   padding:8px;
   display:none;
   z-index:99999;
-  min-width:260px;
+  min-width:240px;
 }
 
 #sagTikMenu .menu-item{
@@ -77,13 +77,6 @@ input,button{
 
 #sagTikMenu .menu-item:hover{
   background:#f0f0f0;
-}
-
-#sagTikMenu small{
-  display:block;
-  font-size:12px;
-  color:#666;
-  margin-left:22px;
 }
 </style>
 </head>
@@ -119,31 +112,23 @@ input,button{
 
 </div>
 
-<!-- ===== SAĞ TIK / UZUN BASMA MENÜSÜ ===== -->
+<!-- SAĞ TIK / UZUN BASMA MENÜSÜ -->
 <div id="sagTikMenu">
-  <div class="menu-item" onclick="siteyeGit()">
-    ❌ | Kapat
-  </div>
-
-  <div class="menu-item" onclick="kucult()">
-    ➖ | Simge Durumuna Küçült
-  </div>
-
-  <div class="menu-item" onclick="oyunTamEkran()">
-    🖥️ | Tam Ekran
-  </div>
+  <div class="menu-item" onclick="siteyeGit()">❌ | Kapat</div>
+  <div class="menu-item" onclick="kucult()">➖ | Simge Durumuna Küçült</div>
+  <div class="menu-item" onclick="oyunTamEkran()">🖥️ | Tam Ekran</div>
 </div>
 
 <script>
 /* ===== OYUN ===== */
-const Alan = document.getElementById("Alan_div");
-const hakEl = document.getElementById("hak");
-const turEl = document.getElementById("tur");
-const tahminInput = document.getElementById("tahmin");
-const sonuc = document.getElementById("sonuc");
-const fullscreenBtn = document.getElementById("fullscreenBtn");
+const Alan=document.getElementById("Alan_div");
+const hakEl=document.getElementById("hak");
+const turEl=document.getElementById("tur");
+const tahminInput=document.getElementById("tahmin");
+const sonuc=document.getElementById("sonuc");
+const fullscreenBtn=document.getElementById("fullscreenBtn");
 
-let tutulanSayi, hakSayisi, turSayisi;
+let tutulanSayi,hakSayisi,turSayisi;
 let oyunBitti=false, fullscreenAktif=false;
 
 oyunuBaslat();
@@ -234,9 +219,7 @@ document.addEventListener("contextmenu",e=>{
 document.addEventListener("click",()=>menu.style.display="none");
 
 document.addEventListener("touchstart",e=>{
-  // OYUN İÇİNDEYSE MENÜ YOK (TAŞIMA SERBEST)
   if(e.target.closest("#Alan_div")) return;
-
   basmaZaman=setTimeout(()=>{
     const t=e.touches[0];
     menu.style.display="block";
@@ -247,11 +230,45 @@ document.addEventListener("touchstart",e=>{
 
 document.addEventListener("touchend",()=>clearTimeout(basmaZaman));
 
+/* ===== SÜRÜKLEME (GERİ GELDİ) ===== */
+const dragArea=document.getElementById("suruklemeAlani");
+let surukleniyor=false, ofsetX=0, ofsetY=0;
+
+function basla(x,y){
+  if(fullscreenAktif) return;
+  surukleniyor=true;
+  const r=Alan.getBoundingClientRect();
+  ofsetX=x-r.left;
+  ofsetY=y-r.top;
+}
+
+function hareket(x,y){
+  if(!surukleniyor || fullscreenAktif) return;
+  Alan.style.left=(x-ofsetX)+"px";
+  Alan.style.top =(y-ofsetY)+"px";
+  Alan.style.transform="none";
+}
+
+dragArea.addEventListener("mousedown",e=>basla(e.clientX,e.clientY));
+document.addEventListener("mousemove",e=>hareket(e.clientX,e.clientY));
+document.addEventListener("mouseup",()=>surukleniyor=false);
+
+dragArea.addEventListener("touchstart",e=>{
+  const t=e.touches[0];
+  basla(t.clientX,t.clientY);
+},{passive:true});
+
+document.addEventListener("touchmove",e=>{
+  const t=e.touches[0];
+  hareket(t.clientX,t.clientY);
+},{passive:true});
+
+document.addEventListener("touchend",()=>surukleniyor=false);
+
 /* ===== MENÜ AKSİYONLARI ===== */
 function siteyeGit(){
   location.href="https://neslicinar1150-lgtm.github.io/neseli-cinar-site";
 }
-
 function kucult(){
   location.href="neselioyun-down.html";
 }
