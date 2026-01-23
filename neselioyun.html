@@ -5,7 +5,6 @@
 <title>Sayı Tahmin Oyunu</title>
 
 <style>
-
 .cikis{
   background:#e53935;
   color:#fff;
@@ -14,7 +13,7 @@
   padding:10px;
   cursor:pointer;
 }
-  
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -41,7 +40,7 @@ input,button{
   font-size:16px;
 }
 
-/* 🔽 SABİT SAĞ ALT MENÜ */
+/* SABİT MENÜ */
 .sabit-menu{
   position:fixed;
   right:15px;
@@ -66,7 +65,6 @@ input,button{
 .fullscreen{background:#222}
 .reset{background:#4caf50}
 .paylas{background:#2196f3}
-.cikis{background:#e53935}
 
 .menu-ac{
   width:55px;
@@ -79,26 +77,31 @@ input,button{
   cursor:pointer;
 }
 
-/* 📱 MOBİLDE MENÜ KAPALI */
 @media(max-width:768px){
   .menu-icerik{display:none}
 }
 </style>
 </head>
+
 <body>
 
 <div class="oyun" id="oyunAlani">
   <h2>🎯 Sayı Tahmin Oyunu</h2>
+
   <button id="cikisBtn" class="cikis" onclick="tamEkranCik()" style="display:none">
-  ❌ Tam Ekrandan Çık
-</button>
-  <p>❤️ Hak: <span id="hak">3</span> | 🔁 Tur: <span id="tur">1</span></p>
+    ❌ Tam Ekrandan Çık
+  </button>
+
+  <p>
+    ❤️ Hak: <span id="hak">3</span> |
+    🔁 Tur: <span id="tur">1</span>
+  </p>
+
   <input type="number" id="tahmin" placeholder="Tahminin">
   <button onclick="tahminEt()">Tahmin Et</button>
   <h3 id="sonuc"></h3>
 </div>
 
-<!-- 🔽 SAĞ ALT MENÜ -->
 <div class="sabit-menu">
   <div class="menu-icerik" id="menu">
     <button class="fullscreen" onclick="tamEkran()">🖥️ Tam Ekran</button>
@@ -109,33 +112,61 @@ input,button{
 </div>
 
 <script>
-let tutulanSayi, hak, tur;
+const oyunAlani = document.getElementById("oyunAlani");
+const hakEl = document.getElementById("hak");
+const turEl = document.getElementById("tur");
+const tahminInput = document.getElementById("tahmin");
+const sonuc = document.getElementById("sonuc");
+const cikisBtn = document.getElementById("cikisBtn");
+
+let tutulanSayi, hakSayisi, turSayisi, oyunBitti=false;
+
 oyunuBaslat();
 
 function oyunuBaslat(){
-  tutulanSayi=Math.floor(Math.random()*10)+1;
-  hak=3; tur=1;
-  hakGuncelle();
+  tutulanSayi = Math.floor(Math.random()*10)+1;
+  hakSayisi = 3;
+  turSayisi = 1;
+  oyunBitti = false;
+  sonuc.innerText = "";
+  tahminInput.value = "";
+  guncelle();
 }
 
-function hakGuncelle(){
-  hak.innerText=hak;
-  tur.innerText=tur;
+function guncelle(){
+  hakEl.innerText = hakSayisi;
+  turEl.innerText = turSayisi;
 }
 
 function tahminEt(){
-  let g=+tahmin.value;
-  if(!g)return alert("Sayı gir");
-  if(g===tutulanSayi) return sonuc.innerText="🎉 Kazandın!";
-  hak--; hak.innerText=hak;
-  if(hak===0) return sonuc.innerText="😢 Bitti: "+tutulanSayi;
-  tur++; tur.innerText=tur;
-  sonuc.innerText=g<tutulanSayi?"📈 Büyük":"📉 Küçük";
+  if(oyunBitti) return;
+
+  const g = Number(tahminInput.value);
+  if(!g) return alert("Sayı gir");
+
+  if(g === tutulanSayi){
+    sonuc.innerText = "🎉 Kazandın!";
+    oyunBitti = true;
+    return;
+  }
+
+  hakSayisi--;
+
+  if(hakSayisi === 0){
+    sonuc.innerText = "😢 Bitti! Sayı: " + tutulanSayi;
+    oyunBitti = true;
+    guncelle();
+    return;
+  }
+
+  turSayisi++;
+  sonuc.innerText = g < tutulanSayi ? "📈 Daha Büyük" : "📉 Daha Küçük";
+  guncelle();
 }
 
 function menuAc(){
-  let m=document.getElementById("menu");
-  m.style.display=m.style.display==="flex"?"none":"flex";
+  const m = document.getElementById("menu");
+  m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
 function tamEkran(){
@@ -146,37 +177,21 @@ function tamEkranCik(){
   document.exitFullscreen();
 }
 
-/* 🎯 TAM EKRAN ALGILAMA */
 document.addEventListener("fullscreenchange",()=>{
-  cikisBtn.style.display=document.fullscreenElement?"block":"none";
+  cikisBtn.style.display = document.fullscreenElement ? "block" : "none";
 });
 
-/* 🖥️ MASAÜSTÜNDE OTOMATİK AÇIK */
-if(window.innerWidth>768){
+if(window.innerWidth > 768){
   document.getElementById("menu").style.display="flex";
 }
 
-function yenidenBasla(){oyunuBaslat()}
-function skoruPaylas(){alert("Paylaşım hazır")}
-
-  function tamEkran(){
-  document.getElementById("oyunAlani").requestFullscreen();
+function yenidenBasla(){
+  oyunuBaslat();
 }
 
-function tamEkranCik(){
-  document.exitFullscreen();
+function skoruPaylas(){
+  alert(`Ben ${turSayisi}. turda oynadım!`);
 }
-
-/* 🔥 TAM EKRANI DİNLE */
-document.addEventListener("fullscreenchange", function () {
-  const cikisBtn = document.getElementById("cikisBtn");
-
-  if (document.fullscreenElement) {
-    cikisBtn.style.display = "block";   // SADECE tam ekranda
-  } else {
-    cikisBtn.style.display = "none";    // normal ekranda ASLA görünmez
-  }
-});
 </script>
 
 </body>
