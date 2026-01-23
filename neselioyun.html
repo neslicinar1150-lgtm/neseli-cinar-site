@@ -220,13 +220,16 @@ document.addEventListener("click",()=>menu.style.display="none");
 
 document.addEventListener("touchstart",e=>{
   if(e.target.closest("#Alan_div")) return;
+
+  e.preventDefault(); // METİN SEÇMEYİ KESER
+
   basmaZaman=setTimeout(()=>{
     const t=e.touches[0];
     menu.style.display="block";
     menu.style.left=t.clientX+"px";
     menu.style.top=t.clientY+"px";
   },600);
-},{passive:true});
+},{passive:false});
 
 document.addEventListener("touchend",()=>clearTimeout(basmaZaman));
 
