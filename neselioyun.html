@@ -232,6 +232,12 @@ function smsGonder() {
 
   window.location.href = `sms:${numara}?body=${encodeURIComponent(metin)}`;
 }
+
+  tahminInput.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    tahminEt();
+  }
+});
 </script>
 
 </body>
