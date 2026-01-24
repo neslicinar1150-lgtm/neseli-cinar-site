@@ -135,7 +135,8 @@ oyunuBaslat();
 
 function oyunuBaslat(){
   tutulanSayi=Math.floor(Math.random()*10)+1;
-  hakSayisi=3; turSayisi=1;
+  hakSayisi=3;
+  turSayisi=1;
   oyunBitti=false;
   sonuc.innerText="";
   tahminInput.value="";
@@ -156,13 +157,16 @@ function tahminEt(){
 
   if(g===tutulanSayi){
     sonuc.innerText="🎉 Kazandın!";
-    oyunBitti=true; return;
+    oyunBitti=true;
+    return;
   }
 
   hakSayisi--;
   if(hakSayisi===0){
     sonuc.innerText="😢 Bitti! Sayı: "+tutulanSayi;
-    oyunBitti=true; guncelle(); return;
+    oyunBitti=true;
+    guncelle();
+    return;
   }
 
   turSayisi++;
@@ -204,25 +208,20 @@ function smsGonder(){
   location.href=`sms:${n}?body=${encodeURIComponent(m)}`;
 }
 
-/* ===== SAĞ TIK & MOBİL ===== */
+/* ===== SAĞ TIK & UZUN BASMA ===== */
 const menu=document.getElementById("sagTikMenu");
 let basmaZaman;
 
 document.addEventListener("contextmenu",e=>{
-  if(e.target.closest("#Alan_div")) return;
+  if(!e.target.closest("#Alan_div")) return;
   e.preventDefault();
   menu.style.display="block";
   menu.style.left=e.clientX+"px";
   menu.style.top=e.clientY+"px";
 });
 
-document.addEventListener("click",()=>menu.style.display="none");
-
 document.addEventListener("touchstart",e=>{
-  if(e.target.closest("#Alan_div")) return;
-
-  e.preventDefault(); // METİN SEÇMEYİ KESER
-
+  if(!e.target.closest("#Alan_div")) return;
   basmaZaman=setTimeout(()=>{
     const t=e.touches[0];
     menu.style.display="block";
@@ -232,8 +231,9 @@ document.addEventListener("touchstart",e=>{
 },{passive:false});
 
 document.addEventListener("touchend",()=>clearTimeout(basmaZaman));
+document.addEventListener("click",()=>menu.style.display="none");
 
-/* ===== SÜRÜKLEME (GERİ GELDİ) ===== */
+/* ===== SÜRÜKLEME (PC + MOBİL) ===== */
 const dragArea=document.getElementById("suruklemeAlani");
 let surukleniyor=false, ofsetX=0, ofsetY=0;
 
@@ -259,12 +259,13 @@ document.addEventListener("mouseup",()=>surukleniyor=false);
 dragArea.addEventListener("touchstart",e=>{
   const t=e.touches[0];
   basla(t.clientX,t.clientY);
-},{passive:true});
+},{passive:false});
 
 document.addEventListener("touchmove",e=>{
+  if(!surukleniyor) return;
   const t=e.touches[0];
   hareket(t.clientX,t.clientY);
-},{passive:true});
+},{passive:false});
 
 document.addEventListener("touchend",()=>surukleniyor=false);
 
