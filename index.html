@@ -8,7 +8,6 @@
 <link rel="icon" href="./1A32B532-738D-4DD5-BA6B-80801E146D9B.png">
 
 <style>
-
 .logo-text{
   font-family: "Fredoka", sans-serif;
   font-size: 60px;
@@ -114,7 +113,6 @@ body {
   flex-direction: column;
   min-width: 240px;
   overflow: hidden;
-
   display: none;
   transform: translateX(-30px) translateY(20px);
   opacity: 0;
@@ -147,10 +145,33 @@ body {
 .burger-menu button:hover {
   background: #f0f0f0;
 }
+
+/* ALT YÜKLEME ANİMASYONU */
+#bottomLoader {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 6px;
+  background: rgba(0,0,0,0.15);
+  z-index: 20000;
+}
+
+#bottomLoaderBar {
+  width: 0%;
+  height: 100%;
+  background: #00ff00;
+  transition: width 0.4s ease;
+}
 </style>
 </head>
 
 <body oncontextmenu="return false;">
+
+<!-- ALT YÜKLEME -->
+<div id="bottomLoader">
+  <div id="bottomLoaderBar"></div>
+</div>
 
 <nav class="navbar">
   <div class="logo-text">Neşeli Çınar</div>
@@ -159,10 +180,8 @@ body {
   </form>
 </nav>
 
-<!-- OVERLAY -->
 <div id="overlay"></div>
 
-<!-- BURGER -->
 <div class="burger-container">
   <button id="burgerBtn">☰</button>
   <div id="burgerMenu" class="burger-menu">
@@ -199,14 +218,10 @@ const reloadPage = document.getElementById("reloadPage");
 
 burgerBtn.onclick = (e) => {
   e.stopPropagation();
-
   burgerMenu.classList.toggle("open");
   burgerBtn.classList.toggle("active");
   burgerBtn.innerHTML = burgerMenu.classList.contains("open") ? "✖" : "☰";
-
-  overlay.style.display = burgerMenu.classList.contains("open")
-    ? "block"
-    : "none";
+  overlay.style.display = burgerMenu.classList.contains("open") ? "block" : "none";
 };
 
 overlay.onclick = () => {
@@ -217,6 +232,21 @@ overlay.onclick = () => {
 };
 
 reloadPage.onclick = () => location.reload();
+
+// ALT YÜKLEME ANİMASYONU
+const loader = document.getElementById("bottomLoader");
+const loaderBar = document.getElementById("bottomLoaderBar");
+
+let progress = 0;
+const loading = setInterval(() => {
+  progress += Math.random() * 25;
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(loading);
+    setTimeout(() => loader.style.display = "none", 400);
+  }
+  loaderBar.style.width = progress + "%";
+}, 200);
 </script>
 
 </body>
