@@ -8,7 +8,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ALT YÜKLEME ANİMASYONU */
+#bottomLoader {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 6px;
+  background: rgba(0,0,0,0.1);
+  z-index: 100000;
+}
 
+#bottomLoaderBar {
+  height: 100%;
+  width: 0%;
+  background: #00ff00;
+  transition: width 0.4s ease;
+}
+  
 /* Sağ alt köşe arama */
 .sag-alt-arama {
   position: fixed;
@@ -55,7 +72,10 @@
 </head>
 
 <body>
-
+<!-- ALT YÜKLEME -->
+<div id="bottomLoader">
+  <div id="bottomLoaderBar"></div>
+</div>
 <a href="https://neslicinar1150-lgtm.github.io/neseli-cinar-site" class="ana-sayfa-buton">
 🏠 Ana Sayfa
 </a>
@@ -108,6 +128,24 @@ fetch("arama.json")
     document.getElementById("sonuclar").innerHTML =
       "<li>Arama verisi yüklenemedi.</li>";
   });
+
+  // ALT YÜKLEME ANİMASYONU
+const loaderBar = document.getElementById("bottomLoaderBar");
+const loader = document.getElementById("bottomLoader");
+
+let progress = 0;
+const loadingInterval = setInterval(() => {
+  progress += Math.random() * 20;
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(loadingInterval);
+
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 400);
+  }
+  loaderBar.style.width = progress + "%";
+}, 200);
 </script>
 
 </body>
