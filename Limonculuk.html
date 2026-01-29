@@ -109,8 +109,9 @@ body {
 <div id="bottomLoader">
   <div id="bottomLoaderBar"></div>
 </div>
-<a href="Limonculuk.pdf" class="pdf-indir" download>
-  📄 PDF İndir
+<a href="Limonculuk.pdf" onclick="indir()" class="pdf-indir" download>
+  PDF Dokümanı olarak indir
+  İndirilme sayısı: <span id="sayac">0</span>
 </a>
 <div class="sayfa">
 
@@ -172,6 +173,21 @@ const loadingInterval = setInterval(() => {
   }
   loaderBar.style.width = progress + "%";
 }, 200);
+
+  let sayac = localStorage.getItem("downloadCount") || 0;
+document.getElementById("sayac").innerText = sayac;
+
+function indir(){
+  if(!localStorage.getItem("indirildi")){
+    sayac++;
+    localStorage.setItem("downloadCount", sayac);
+    localStorage.setItem("indirildi", "true");
+    document.getElementById("sayac").innerText = sayac;
+  }
+
+  // İndirilecek dosya
+  window.location.href = "Limonculuk.pdf";
+}
 </script>
 </body>
 </html>
