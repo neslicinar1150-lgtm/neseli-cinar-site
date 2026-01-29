@@ -13,6 +13,7 @@
   font-size: 60px;
   font-weight: 600;
   color: black;
+  cursor:pointer;
 }
 
 body, button, a, input {
@@ -146,7 +147,7 @@ body {
   background: #f0f0f0;
 }
 
-/* ALT YÜKLEME ANİMASYONU */
+/* ALT YÜKLEME */
 #bottomLoader {
   position: fixed;
   left: 0;
@@ -168,13 +169,12 @@ body {
 
 <body oncontextmenu="return false;">
 
-<!-- ALT YÜKLEME -->
 <div id="bottomLoader">
   <div id="bottomLoaderBar"></div>
 </div>
 
 <nav class="navbar">
-  <a class="logo-text" id="reloadPage">Neşeli Çınar</a>
+  <a class="logo-text" id="logoReload">Neşeli Çınar</a>
 </nav>
 
 <div id="overlay"></div>
@@ -182,10 +182,19 @@ body {
 <div class="burger-container">
   <button id="burgerBtn">☰</button>
   <div id="burgerMenu" class="burger-menu">
-      <form action="https://neselicinar.com.tr/cinarama2.html" method="GET">
-    <input type="search" name="q" placeholder="Ara..." required>
-  </form>
-    <button id="reloadPage">🔄 Sayfayı yeniden başlat</button>
+
+    <!-- ARAMA -->
+    <form action="https://neselicinar.com.tr/cinarama2.html" method="GET"
+          style="display:flex; gap:8px; padding:10px;">
+      <input type="search" name="q" placeholder="Ara..." required
+             style="flex:1; padding:8px; font-size:15px;">
+      <button type="submit"
+              style="padding:8px 14px; font-size:15px; font-weight:bold;">
+        🔍 Ara
+      </button>
+    </form>
+
+    <button id="menuReload">🔄 Sayfayı yeniden başlat</button>
   </div>
 </div>
 
@@ -209,11 +218,10 @@ window.addEventListener("scroll", () => {
 });
 topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-// BURGER MENÜ
+// BURGER
 const burgerBtn = document.getElementById("burgerBtn");
 const burgerMenu = document.getElementById("burgerMenu");
 const overlay = document.getElementById("overlay");
-const reloadPage = document.getElementById("reloadPage");
 
 burgerBtn.onclick = (e) => {
   e.stopPropagation();
@@ -230,19 +238,19 @@ overlay.onclick = () => {
   overlay.style.display = "none";
 };
 
-reloadPage.onclick = () => location.reload();
+// YENİLEME
+document.getElementById("logoReload").onclick = () => location.reload();
+document.getElementById("menuReload").onclick = () => location.reload();
 
-// ALT YÜKLEME ANİMASYONU
-const loader = document.getElementById("bottomLoader");
+// ALT YÜKLEME
 const loaderBar = document.getElementById("bottomLoaderBar");
-
 let progress = 0;
 const loading = setInterval(() => {
   progress += Math.random() * 25;
   if (progress >= 100) {
     progress = 100;
     clearInterval(loading);
-    setTimeout(() => loader.style.display = "none", 400);
+    setTimeout(() => document.getElementById("bottomLoader").style.display = "none", 400);
   }
   loaderBar.style.width = progress + "%";
 }, 200);
