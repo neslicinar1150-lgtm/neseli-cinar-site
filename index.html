@@ -177,6 +177,7 @@ body {
   <a class="logo-text" id="logoReload">
   <img src="https://neselicinar.com.tr/1A32B532-738D-4DD5-BA6B-80801E146D9B.png" width="50" height="50">
   Neşeli Çınar</a>
+  <a onclick
 </nav>
 
 <div id="overlay"></div>
@@ -257,6 +258,28 @@ const loading = setInterval(() => {
   loaderBar.style.width = progress + "%";
 }, 200);
 </script>
+<script type="module">
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyB6C4qfFHcWZkNBCqb9-VmdpkS5k7jIAKY",
+  authDomain: "neseli-cinar.firebaseapp.com",
+  projectId: "neseli-cinar",
+  storageBucket: "neseli-cinar.firebasestorage.app",
+  messagingSenderId: "580418867516",
+  appId: "1:580418867516:web:72ae9d90c650617ac64e39",
+  measurementId: "G-JJ4LY1G50C"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+</script>
 </body>
 </html>
