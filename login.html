@@ -121,5 +121,63 @@ function go(page){
   setTimeout(()=>location.href=page,400);
 }
 </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { 
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+/* 🔐 Firebase ayarların (AYNEN seninki) */
+const firebaseConfig = {
+  apiKey: "AIzaSyDrMzDc1CqCmAsFByYGsRr3itasWXWalNU",
+  authDomain: "hesap-3db5f.firebaseapp.com",
+  projectId: "hesap-3db5f",
+  storageBucket: "hesap-3db5f.firebasestorage.app",
+  messagingSenderId: "704840876083",
+  appId: "1:704840876083:web:c1395429c4aa2f60ad6346"
+};
+
+/* 🔥 Firebase başlat */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+/* 👇 GİRİŞ */
+window.login = function(){
+  startLoading();
+
+  const email = document.getElementById("email").value;
+  const pass  = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, pass)
+    .then(()=>{
+      localStorage.setItem("user", email);
+      go("dashboard.html");
+    })
+    .catch(err=>{
+      alert("Giriş başarısız");
+      stopLoading();
+    });
+}
+
+/* 👇 KAYIT */
+window.register = function(){
+  startLoading();
+
+  const email = document.getElementById("email").value;
+  const pass  = document.getElementById("password").value;
+
+  createUserWithEmailAndPassword(auth, email, pass)
+    .then(()=>{
+      localStorage.setItem("user", email);
+      go("dashboard.html");
+    })
+    .catch(err=>{
+      alert(err.message);
+      stopLoading();
+    });
+}
+</script>
 </body>
 </html>
