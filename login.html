@@ -177,6 +177,21 @@ window.register = function(){
       stopLoading();
     });
 }
+
+  function saveAccount(user){
+  let accounts = JSON.parse(localStorage.getItem("cinar_accounts")) || [];
+
+  // aynı hesap varsa ekleme
+  if(!accounts.find(a => a.uid === user.uid)){
+    accounts.push({
+      uid: user.uid,
+      email: user.email,
+      lastLogin: Date.now()
+    });
+  }
+
+  localStorage.setItem("cinar_accounts", JSON.stringify(accounts));
+}
 </script>
 </body>
 </html>
