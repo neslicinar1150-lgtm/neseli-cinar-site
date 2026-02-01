@@ -83,14 +83,21 @@ button{
 
  <input id="email" placeholder="E-posta">
 <input id="password" type="password" placeholder="Şifre">
-<button onclick="login()">Giriş Yap</button>
+<button onclick="login()" id="gonderBtn">Giriş Yap</button>
 
   <div class="links">
+    <p>Zaten hesabın bu cihazda kayıtlı mı? O zaman <a href="accounts.html">bu cihazdaki hesaplar</a>a bakalım.<p>
     <span>Hesabın yok mu?</span>
     <a href="register.html">Hesap oluştur</a>
   </div>
 </div>
 <script>
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    document.getElementById("gonderBtn").click();
+  }
+})
+  
 const loader = document.getElementById("top-loader");
 
 function startLoading(){
