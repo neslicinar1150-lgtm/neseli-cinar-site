@@ -2,9 +2,10 @@
 <html lang="tr">
 <head>
   <link rel="icon" href="/neseli-cinar-site/1A32B532-738D-4DD5-BA6B-80801E146D9B.png">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evde Limon Yetiştirmenin 6 Püf Noktası</title>
+<title>Arama Sonuçları - ÇınArama</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 /* ALT YÜKLEME ANİMASYONU */
@@ -25,137 +26,109 @@
   transition: width 0.4s ease;
 }
   
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* PDF sayfası */
-.sayfa {
-  position: relative;
-  width: 210mm;
-  height: 297mm;
-  background: url("resimler/arka1.jpg") no-repeat center;
-  background-size: cover;
-  page-break-after: always;
-}
-
-/* Ortadaki beyaz kutu */
-.bilgi {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  background: white;
-  padding: 25px 30px;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-/* Başlık */
-.bilgi h2 {
-  margin-top: 0;
-  text-align: center;
-}
-
-/* Liste */
-.bilgi ol {
-  padding-left: 20px;
-  line-height: 1.6;
-  font-size: 16px;
-}
-
-/* Logolar */
-.logo-sol {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  width: 120px;
-}
-
-.logo-sag {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 120px;
-}
-</style>
-<style>
-.pdf-indir {
+/* Sağ alt köşe arama */
+.sag-alt-arama {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #2e7d32;
-  color: white;
-  padding: 14px 18px;
-  border-radius: 30px;
+  right: 15px;
+  bottom: 15px;
+  z-index: 9999;
+}
+
+.sag-alt-arama input[type="search"] {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 2px solid #ffcc00;
+  outline: none;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.sag-alt-arama input[type="search"]:focus {
+  border-color: #ff9900;
+}
+
+/* Ana sayfa butonu */
+.ana-sayfa-buton {
+  position: fixed;
+  left: 15px;
+  bottom: 15px;
+  background-color: aliceblue;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 100px;
   text-decoration: none;
-  font-size: 15px;
   font-weight: bold;
+  font-size: 14px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   z-index: 9999;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
-.pdf-indir:hover {
+.ana-sayfa-buton:hover {
+  background-color: #e6f3ff;
   transform: scale(1.05);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
 }
 </style>
 </head>
 
 <body>
-  <!-- ALT YÜKLEME -->
+<!-- ALT YÜKLEME -->
 <div id="bottomLoader">
   <div id="bottomLoaderBar"></div>
 </div>
-<a href="Limonculuk.pdf" onclick="indir()" class="pdf-indir" download>
-  PDF Dokümanı Olarak İndir
-  <br><br>
-  İndirilme sayısı: <span id="sayac">0</span>
+<a href="https://neslicinar1150-lgtm.github.io/neseli-cinar-site" class="ana-sayfa-buton">
+🏠 Ana Sayfa
 </a>
-<div class="sayfa">
 
-  <div class="bilgi">
-    <h2>Evde Limon Yetiştirmenin 6 Püf Noktası</h2>
+<h1>Arama Sonuçları</h1>
+<p id="bilgi"></p>
+<ul id="sonuclar"></ul>
 
-    <ol>
-      <li>
-        Limon saksısının yerini sabit tutmalısınız. Yer değişikliği,
-        bitkinin yaprak dökmesine ve gelişiminin yavaşlamasına neden olur.
-      </li>
+<form 
+  action="https://neslicinar1150-lgtm.github.io/neseli-cinar-site/cinarama2.html" 
+  method="GET"
+  class="sag-alt-arama"
+>
+  <input type="search" name="q" placeholder="Ara..." required>
+</form>
 
-      <li>
-        Limon bitkisi toprağının tamamen kurumasını sevmez.
-        Toprak nemli kalmalı ancak kesinlikle su içinde bırakılmamalıdır.
-      </li>
-
-      <li>
-        Evde limon yetiştirirken iki ayrı saksı kullanmanız önerilir.
-        Böylece bitkinin kök gelişimi daha sağlıklı olur.
-      </li>
-
-      <li>
-        Sulama işleminden sonra saksı tabağında biriken suyu mutlaka dökün.
-        Tabakta kalan su kök çürümesine yol açabilir.
-      </li>
-
-      <li>
-        Limon bitkisi bol ışık sever. Günde en az 6 saat
-        güneş alan bir pencere önü tercih edilmelidir.
-      </li>
-
-      <li>
-        Bitkinin yaprakları düzenli olarak kontrol edilmeli,
-        sararan veya kuruyan yapraklar temizlenmelidir.
-      </li>
-    </ol>
-  </div>
-  <img src="Resimler/logo.png" class="logo-sag">
-
-</div>
 <script>
+// URL'den arama kelimesi
+const params = new URLSearchParams(window.location.search);
+const query = params.get("q") || "";
+
+// Title + bilgi
+document.title = `"${query}" için arama sonuçları - ÇınArama`;
+document.getElementById("bilgi").textContent =
+  `"${query}" için sonuçlar:`;
+
+// JSON'dan sonuç çek
+fetch("arama.json")
+  .then(res => res.json())
+  .then(data => {
+    const liste = document.getElementById("sonuclar");
+
+    const sonuc = data.filter(item =>
+      item.baslik.toLowerCase().includes(query.toLowerCase()) ||
+      item.icerik.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (sonuc.length === 0) {
+      liste.innerHTML = "<li>Sonuç bulunamadı.</li>";
+      return;
+    }
+
+    sonuc.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${item.url}">${item.baslik}</a>`;
+      liste.appendChild(li);
+    });
+  })
+  .catch(() => {
+    document.getElementById("sonuclar").innerHTML =
+      "<li>Arama verisi yüklenemedi.</li>";
+  });
+
   // ALT YÜKLEME ANİMASYONU
 const loaderBar = document.getElementById("bottomLoaderBar");
 const loader = document.getElementById("bottomLoader");
@@ -173,21 +146,7 @@ const loadingInterval = setInterval(() => {
   }
   loaderBar.style.width = progress + "%";
 }, 200);
-
-  let sayac = localStorage.getItem("downloadCount") || 0;
-document.getElementById("sayac").innerText = sayac;
-
-function indir(){
-  if(!localStorage.getItem("indirildi")){
-    sayac++;
-    localStorage.setItem("downloadCount", sayac);
-    localStorage.setItem("indirildi", "true");
-    document.getElementById("sayac").innerText = sayac;
-  }
-
-  // İndirilecek dosya
-  window.location.href = "Limonculuk.pdf";
-}
 </script>
+
 </body>
 </html>
