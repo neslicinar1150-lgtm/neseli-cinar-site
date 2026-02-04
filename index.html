@@ -165,32 +165,27 @@ body {
   transition: width 0.4s ease;
 }
 
-/* CURSOR DÜZENLEME */
-@media (hover: hover) and (pointer: fine) {
-  body, button, a, input {
-    cursor: url("Resimler/Neşeli Çınar İmleç.png") 16 16, auto !important;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
+/* MOBİLDE SÜREKLİ CURSOR GÖSTERME */
+@media (hover:none) and (pointer:coarse){
   body, button, a, input {
     cursor: auto !important;
   }
 }
 
-.touch-cursor {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  animation: touchFade 0.6s ease forwards;
+/* DOKUNMA CURSOR GÖRSELİ */
+.touch-cursor{
+  position:fixed;
+  width:34px;
+  height:34px;
+  pointer-events:none;
+  z-index:99999;
+  transform:translate(-50%,-50%);
+  animation:touchFade .6s ease forwards;
 }
 
-@keyframes touchFade {
-  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  to { opacity: 0; transform: translate(-50%, -50%) scale(1.6); }
+@keyframes touchFade{
+  from{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  to{opacity:0;transform:translate(-50%,-50%) scale(1.6)}
 }
 </style>
 </head>
@@ -283,20 +278,17 @@ const loading = setInterval(() => {
   loaderBar.style.width = progress + "%";
 }, 120);
 
-const isMobileView = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-if (isMobileView) {
-  document.addEventListener("touchstart", function (e) {
-    const t = e.touches[0];
-    if (!t) return;
-    const img = document.createElement("img");
-    img.src = "Resimler/Neşeli Çınar İmleç.png";
-    img.className = "touch-cursor";
-    img.style.left = t.clientX + "px";
-    img.style.top = t.clientY + "px";
-    document.body.appendChild(img);
-    setTimeout(() => img.remove(), 600);
-  });
-}
+/* DOKUNMA GÖRSELİ */
+document.addEventListener("pointerdown", function(e){
+  if(e.pointerType !== "touch") return;
+  const img = document.createElement("img");
+  img.src = "Resimler/Neşeli Çınar İmleç.png";
+  img.className = "touch-cursor";
+  img.style.left = e.clientX + "px";
+  img.style.top  = e.clientY + "px";
+  document.body.appendChild(img);
+  setTimeout(()=>img.remove(),600);
+});
 </script>
 
 </body>
