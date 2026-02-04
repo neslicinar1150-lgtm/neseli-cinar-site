@@ -17,7 +17,7 @@
 }
 
 body, button, a, input {
-  cursor: url("Resimler/Neşeli Çınar İmleç.png") 8 8, auto;
+  cursor: url("Resimler/Neşeli Çınar İmleç.png") 16 16, auto;
 }
 
 body {
@@ -164,6 +164,34 @@ body {
   background: #00ff00;
   transition: width 0.4s ease;
 }
+
+/* CURSOR DÜZENLEME */
+@media (hover: hover) and (pointer: fine) {
+  body, button, a, input {
+    cursor: url("Resimler/Neşeli Çınar İmleç.png") 16 16, auto !important;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  body, button, a, input {
+    cursor: auto !important;
+  }
+}
+
+.touch-cursor {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  animation: touchFade 0.6s ease forwards;
+}
+
+@keyframes touchFade {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 0; transform: translate(-50%, -50%) scale(1.6); }
+}
 </style>
 </head>
 
@@ -174,10 +202,11 @@ body {
 </div>
 
 <nav class="navbar">
-  <a class="logo-text" id="logoReload">
-  <img src="https://neselicinar.com.tr/1A32B532-738D-4DD5-BA6B-80801E146D9B.png" width="50" height="50">
-  Neşeli Çınar</a>
-  <p id="userInfo></p>
+  <div class="logo-text" id="logoReload">
+    <img src="https://neselicinar.com.tr/1A32B532-738D-4DD5-BA6B-80801E146D9B.png" width="50" height="50">
+    Neşeli Çınar
+  </div>
+  <p id="userInfo"></p>
 </nav>
 
 <div id="overlay"></div>
@@ -185,11 +214,8 @@ body {
 <div class="burger-container">
   <button id="burgerBtn">☰</button>
   <div id="burgerMenu" class="burger-menu">
-    <p>•
-    _</p>
-    <button id="googleBtn"> Google ile Giriş Yap</button>
+    <button id="googleBtn">Google ile Giriş Yap</button>
 
-    <!-- ARAMA -->
     <form action="https://neselicinar.com.tr/CinArama/index.html" method="GET"
           style="display:flex; gap:8px; padding:10px;">
       <input type="search" name="q" placeholder="Ara..." required
@@ -217,14 +243,12 @@ body {
 <button id="topBtn">↑</button>
 
 <script>
-// YUKARI ÇIK
 const topBtn = document.getElementById("topBtn");
 window.addEventListener("scroll", () => {
   topBtn.style.display = window.scrollY > 300 ? "block" : "none";
 });
 topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-// BURGER
 const burgerBtn = document.getElementById("burgerBtn");
 const burgerMenu = document.getElementById("burgerMenu");
 const overlay = document.getElementById("overlay");
@@ -244,45 +268,36 @@ overlay.onclick = () => {
   overlay.style.display = "none";
 };
 
-// YENİLEME
 document.getElementById("logoReload").onclick = () => location.reload();
 document.getElementById("menuReload").onclick = () => location.reload();
 
-// ALT YÜKLEME
 const loaderBar = document.getElementById("bottomLoaderBar");
 let progress = 0;
 const loading = setInterval(() => {
-  progress += Math.random() * 25;
+  progress += 8;
   if (progress >= 100) {
     progress = 100;
     clearInterval(loading);
-    setTimeout(() => document.getElementById("bottomLoader").style.display = "none", 400);
+    setTimeout(() => document.getElementById("bottomLoader").style.display = "none", 300);
   }
   loaderBar.style.width = progress + "%";
-}, 200);
-</script>
-<script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+}, 120);
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyB6C4qfFHcWZkNBCqb9-VmdpkS5k7jIAKY",
-  authDomain: "neseli-cinar.firebaseapp.com",
-  projectId: "neseli-cinar",
-  storageBucket: "neseli-cinar.firebasestorage.app",
-  messagingSenderId: "580418867516",
-  appId: "1:580418867516:web:72ae9d90c650617ac64e39",
-  measurementId: "G-JJ4LY1G50C"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const isMobileView = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+if (isMobileView) {
+  document.addEventListener("touchstart", function (e) {
+    const t = e.touches[0];
+    if (!t) return;
+    const img = document.createElement("img");
+    img.src = "Resimler/Neşeli Çınar İmleç.png";
+    img.className = "touch-cursor";
+    img.style.left = t.clientX + "px";
+    img.style.top = t.clientY + "px";
+    document.body.appendChild(img);
+    setTimeout(() => img.remove(), 600);
+  });
+}
 </script>
+
 </body>
 </html>
