@@ -8,25 +8,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* 🎯 Gerçek imleci gizle */
-body {
+
+/* 🔒 GERÇEK İMLECİ HER YERDE ZORLA GİZLE (POKI TAKTİĞİ) */
+html,
+body,
+*,
+*:hover,
+*:active,
+*:focus {
   cursor: none !important;
 }
 
-/* 🌳 Neşeli Çınar sahte imleci */
+/* 🌳 NEŞELİ ÇINAR SAHTE İMLEÇ */
 #neseliCursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 48px;          /* BOYUT – İSTERSEN 32 / 64 YAP */
+  width: 48px;
   height: 83px;
   pointer-events: none;
-  z-index: 999999;
-  transform: translate(-6px, -6px); /* tıklama ucu ayarı */
-  transition: transform 0.03s linear;
+  z-index: 2147483647;
+  transform: translate(-8px, -8px);
 }
 
-  
 /* ALT YÜKLEME ANİMASYONU */
 #bottomLoader {
   position: fixed;
@@ -44,7 +48,7 @@ body {
   background: #00ff00;
   transition: width 0.4s ease;
 }
-  
+
 /* Sağ alt köşe arama */
 .sag-alt-arama {
   position: fixed;
@@ -91,7 +95,9 @@ body {
 </head>
 
 <body>
-  <img 
+
+<!-- 🌳 SAHTE İMLEÇ -->
+<img
   id="neseliCursor"
   src="https://neselicinar.com.tr/Resimler/mouse-cinar.png"
   alt="Neşeli Çınar İmleç">
@@ -100,6 +106,7 @@ body {
 <div id="bottomLoader">
   <div id="bottomLoaderBar"></div>
 </div>
+
 <a href="https://neslicinar1150-lgtm.github.io/neseli-cinar-site" class="ana-sayfa-buton">
 🏠 Ana Sayfa
 </a>
@@ -117,6 +124,21 @@ body {
 </form>
 
 <script>
+// 🌳 POKI TARZI İMLEÇ TAKİBİ
+const neseliCursor = document.getElementById("neseliCursor");
+
+document.addEventListener("mousemove", e => {
+  neseliCursor.style.left = e.clientX + "px";
+  neseliCursor.style.top  = e.clientY + "px";
+});
+
+document.addEventListener("mouseenter", () => {
+  neseliCursor.style.display = "block";
+});
+document.addEventListener("mouseleave", () => {
+  neseliCursor.style.display = "none";
+});
+
 // URL'den arama kelimesi
 const params = new URLSearchParams(window.location.search);
 const query = params.get("q") || "";
@@ -153,7 +175,7 @@ fetch("arama.json")
       "<li>Arama verisi yüklenemedi.</li>";
   });
 
-  // ALT YÜKLEME ANİMASYONU
+// ALT YÜKLEME ANİMASYONU
 const loaderBar = document.getElementById("bottomLoaderBar");
 const loader = document.getElementById("bottomLoader");
 
@@ -170,15 +192,6 @@ const loadingInterval = setInterval(() => {
   }
   loaderBar.style.width = progress + "%";
 }, 200);
-
-  // 🌳 Poki tarzı imleç takip sistemi
-const neseliCursor = document.getElementById("neseliCursor");
-
-document.addEventListener("mousemove", e => {
-  neseliCursor.style.left = e.clientX + "px";
-  neseliCursor.style.top  = e.clientY + "px";
-});
-
 </script>
 
 </body>
