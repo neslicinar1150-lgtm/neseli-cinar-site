@@ -34,9 +34,6 @@ body {
   cursor:pointer;
 }
 
-body, button, a, input {
-  cursor: url("Resimler/mouse-cinar.png") 16 16, auto;
-}
 
 body {
   background-color: #32A5DC;
@@ -183,24 +180,6 @@ body {
   transition: width 0.4s ease;
 }
 
-/* MOBİLDE SÜREKLİ CURSOR GÖSTERME */
-@media (hover:none) and (pointer:coarse){
-  body, button, a, input {
-    cursor: auto !important;
-  }
-}
-
-/* DOKUNMA CURSOR GÖRSELİ */
-.touch-cursor{
-  position:fixed;
-  width:34px;
-  height:34px;
-  pointer-events:none;
-  z-index:99999;
-  transform:translate(-50%,-50%);
-  animation:touchFade .6s ease forwards;
-}
-
 @keyframes touchFade{
   from{opacity:1;transform:translate(-50%,-50%) scale(1)}
   to{opacity:0;transform:translate(-50%,-50%) scale(1.6)}
@@ -231,7 +210,7 @@ html, body,
 <body oncontextmenu="return false;">
 <img 
   id="neseliCursor"
-  src="Resimler/Neşeli Çınar İmleç.png"
+  src="https://neselicinar.com.tr/Resimler/mouse-cinar.png"
   alt="Neşeli Çınar İmleç">
 <div id="bottomLoader">
   <div id="bottomLoaderBar"></div>
