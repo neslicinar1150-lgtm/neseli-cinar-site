@@ -8,6 +8,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
+/* 🎯 Gerçek imleci gizle */
+body {
+  cursor: none !important;
+}
+
+/* 🌳 Neşeli Çınar sahte imleci */
+#neseliCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 48px;          /* BOYUT – İSTERSEN 32 / 64 YAP */
+  height: 48px;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-6px, -6px); /* tıklama ucu ayarı */
+  transition: transform 0.03s linear;
+}
+  
 #top-loader{
   position:fixed;
   top:0;
@@ -73,10 +91,34 @@ button{
 .links a:hover{
   text-decoration:underline;
 }
+
+  /* 🔒 Gerçek imleci HER YERDE zorla gizle */
+html, body,
+*,
+*:hover,
+*:active,
+*:focus {
+  cursor: none !important;
+}
+
+  #neseliCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 48px;     /* istersen 32 / 64 */
+  height: 48px;
+  pointer-events: none;
+  z-index: 2147483647; /* MAX Z-INDEX */
+  transform: translate(-8px, -8px);
+}
 </style>
 </head>
 
 <body class="fade">
+  <img 
+  id="neseliCursor"
+  src="Resimler/Neşeli Çınar İmleç.png"
+  alt="Neşeli Çınar İmleç">
   <div id="top-loader"></div>
 <div class="form">
   <h2>Çınar ile giriş yap</h2>
@@ -199,6 +241,27 @@ window.register = function(){
 
   localStorage.setItem("cinar_accounts", JSON.stringify(accounts));
 }
+
+  // 🌳 Poki tarzı imleç takip sistemi
+const neseliCursor = document.getElementById("neseliCursor");
+
+document.addEventListener("mousemove", e => {
+  neseliCursor.style.left = e.clientX + "px";
+  neseliCursor.style.top  = e.clientY + "px";
+});
+
+  document.addEventListener("mousemove", e => {
+  neseliCursor.style.left = e.clientX + "px";
+  neseliCursor.style.top  = e.clientY + "px";
+});
+
+// Sekme değişince kaybolmasın
+document.addEventListener("mouseenter", () => {
+  neseliCursor.style.display = "block";
+});
+document.addEventListener("mouseleave", () => {
+  neseliCursor.style.display = "none";
+});
 </script>
 </body>
 </html>
