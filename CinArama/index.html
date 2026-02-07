@@ -8,6 +8,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+#cursor {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  transform: translate(0, 0);
+  z-index: 9999;
+}
+  
 body {
     cursor: url("cursor_64x64.png") 16 16, auto;
   }
@@ -105,19 +114,26 @@ body {
 </form>
 
 <script>
-// 🌳 POKI TARZI İMLEÇ TAKİBİ
-const neseliCursor = document.getElementById("neseliCursor");
+  let x = 0, y = 0;
 
 document.addEventListener("mousemove", e => {
-  neseliCursor.style.left = e.clientX + "px";
-  neseliCursor.style.top  = e.clientY + "px";
+  x = e.clientX - 16;
+  y = e.clientY - 16;
 });
 
-document.addEventListener("mouseenter", () => {
-  neseliCursor.style.display = "block";
-});
-document.addEventListener("mouseleave", () => {
-  neseliCursor.style.display = "none";
+function loop() {
+  c.style.left = x + "px";
+  c.style.top  = y + "px";
+  requestAnimationFrame(loop);
+}
+loop();
+
+  
+const size = 64;
+
+document.addEventListener("mousemove", e => {
+  c.style.left = (e.clientX - size / 2) + "px";
+  c.style.top  = (e.clientY - size / 2) + "px";
 });
 
 // URL'den arama kelimesi
@@ -177,4 +193,5 @@ const loadingInterval = setInterval(() => {
 
 </body>
 </html>
+
 
