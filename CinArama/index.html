@@ -8,28 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-/* 🔒 GERÇEK İMLECİ HER YERDE ZORLA GİZLE (POKI TAKTİĞİ) */
-html,
-body,
-*,
-*:hover,
-*:active,
-*:focus {
-  cursor: none !important;
-}
-
-/* 🌳 NEŞELİ ÇINAR SAHTE İMLEÇ */
-#neseliCursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 48px;
-  height: 83px;
-  pointer-events: none;
-  z-index: 2147483647;
-  transform: translate(-8px, -8px);
-}
+body {
+    cursor: url("cursor_64x64.png") 16 16, auto;
+  }
 
 /* ALT YÜKLEME ANİMASYONU */
 #bottomLoader {
@@ -196,3 +177,4 @@ const loadingInterval = setInterval(() => {
 
 </body>
 </html>
+
